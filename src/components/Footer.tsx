@@ -39,7 +39,7 @@ export default function Footer() {
             <h3 className="text-base font-medium mb-4">Contact</h3>
             <p className="text-sm text-[#F5F5F5] mb-2">Tel : 0496 89 25 31</p>
             <p className="text-sm text-[#F5F5F5] mb-2">Fax : 02 366 91 34</p>
-            <p className="text-sm text-[#F5F5F5] mb-2">Visite de l'atelier sur rendez-vous</p>
+            <p className="text-sm text-[#F5F5F5] mb-2">Visite de l&rsquo;atelier sur rendez-vous</p>
             <p className="text-sm text-[#F5F5F5]">Address: Hoogstraat 66, 1650 Beersel, Belgium</p>
           </div>
         </div>

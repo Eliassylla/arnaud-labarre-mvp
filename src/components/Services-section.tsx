@@ -32,7 +32,7 @@ export default function FeatureSectionExample() {
 
   return (
     <div className="w-full">
-      <FeatureSteps features={features} title="Nos Services" autoPlayInterval={5000} />
+      <FeatureSteps features={features} title="Nos Services" autoPlayInterval={3000} />
     </div>
   )
 }

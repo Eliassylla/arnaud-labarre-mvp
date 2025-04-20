@@ -1,10 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import Image from "next/image"
+import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
-import { GalleryVerticalEnd } from "lucide-react"
 import { LoginForm } from "@/components/login-form"
 
 interface Feature {
@@ -19,7 +17,6 @@ interface FeatureStepsProps {
   className?: string
   title?: string
   autoPlayInterval?: number
-  imageHeight?: string
 }
 
 export function FeatureSteps({
@@ -27,7 +24,6 @@ export function FeatureSteps({
   className,
   title = "How to get Started",
   autoPlayInterval = 3000,
-  imageHeight = "h-[400px]",
 }: FeatureStepsProps) {
   const [currentFeature, setCurrentFeature] = useState(0)
   const [progress, setProgress] = useState(0)

@@ -1,6 +1,4 @@
 import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Check } from 'lucide-react';
 import { Avatar } from '@/components/ui/avatar';
 
