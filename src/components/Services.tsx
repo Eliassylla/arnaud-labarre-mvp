@@ -110,7 +110,7 @@ export const FeatureSteps = React.memo(function FeatureSteps({
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0)
   const [expandedItems, setExpandedItems] = useState<string[]>([])
   const [isMainAccordionOpen, setIsMainAccordionOpen] = useState(false)
-  const { isPortraitMobile, isDesktop, isLandscape, isTabletPortrait } = useWindowSize();
+  const { isPortraitMobile, isTabletPortrait } = useWindowSize();
 
   // Animation pour changer les caractéristiques avec délai supplémentaire
   useEffect(() => {
