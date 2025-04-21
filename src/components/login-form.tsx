@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { motion } from "framer-motion" // Assurez-vous que framer-motion est importé
 
 export function LoginForm({
   className,
@@ -16,8 +17,8 @@ export function LoginForm({
   return (
   <div className={cn("w-full max-w-lg mx-auto p-2 sm:p-4 md:p-6", className)} {...props}>
       <Card className="w-full bg-[#f3e5d0] border border-[#A55B53] shadow-lg p-2 sm:p-4 md:p-6 rounded-2xl">
-        <CardHeader>
-          <CardTitle className="font-semibold text-[#3E2F1C] text-center">Demander votre devis gratuit</CardTitle>
+        <CardHeader className="p-4">
+          <CardTitle className="font-semibold text-[#3E2F1C] text-center p-6">Demander votre devis gratuit</CardTitle>
         </CardHeader>
         <CardContent>
           <form className="flex flex-col gap-4" noValidate autoComplete="off">
