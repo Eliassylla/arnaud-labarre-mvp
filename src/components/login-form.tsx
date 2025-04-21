@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { motion } from "framer-motion" // Assurez-vous que framer-motion est importé
 
 export function LoginForm({
   className,

@@ -42,7 +42,6 @@ function useWindowSize() {
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { LoginForm } from "@/components/login-form"
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 import { ChevronDown } from "lucide-react"
 
 const phrases = [
@@ -177,9 +176,6 @@ export const FeatureSteps = React.memo(function FeatureSteps({
         : [...prev, value]
     );
   };
-
-  // Déterminer si nous sommes en mode desktop ou tablette en rotation paysage
-  const isDesktopOrLandscapeTablet = isDesktop || (isLandscape && !isPortraitMobile);
   
   // Déterminer si nous sommes en mode mobile ou tablette portrait où nous voulons l'accordion principal
   const needsMainAccordion = isPortraitMobile || isTabletPortrait;
