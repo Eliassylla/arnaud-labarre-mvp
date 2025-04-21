@@ -28,7 +28,7 @@ export default function FAQ() {
   return (
     <div className="w-full bg-[#F8F5EF]">
       <div className="container mx-auto py-20 px-4 text-[#3E2F1C]">
-        <h1 className="text-4xl font-bold mb-8 text-center">FAQ</h1>
+        <h2 className="text-4xl font-bold mb-8 text-center">FAQ</h2>
         <Accordion type="single" collapsible className="space-y-4">
           {faqs.map((faq, idx) => (
             <AccordionItem key={idx} value={`faq-${idx}`}>

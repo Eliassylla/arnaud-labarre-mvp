@@ -1,9 +1,9 @@
-import Hero from '@/components/Hero'
 import { Header1 } from '@/components/header'
-import ValueProps from '@/components/ValueProps'
-import { Feature } from '@/components/feature-with-image-carousel'
+import Hero from '@/components/Hero'
 import ClientExperience from '@/components/ClientExperience'
-import ServicesSectionExample from '@/components/Services-section'
+import ServicesSectionExample from '@/components/Services'
+import ValueProps from '@/components/ValueProps'
+import { Feature } from '@/components/feature'
 import FAQ from '@/components/FAQ'
 import Footer from '@/components/Footer'
 
@@ -20,10 +20,10 @@ export default function Page() {
           <section id="a-propos" className="scroll-mt-20">
             <ClientExperience />
           </section>
-          <section id="services" className="scroll-mt-20">
+          <section id="services" className="scroll-mt-10">
             <ServicesSectionExample />
           </section>
-          <section id="atouts" className="scroll-mt-20">
+          <section id="atouts" className="scroll-mt-10">
             <ValueProps />
           </section>
           <section id="realisations" className="scroll-mt-20">
@@ -33,7 +33,7 @@ export default function Page() {
             <FAQ />
           </section>
         </main>
-        <section id="contact" className="scroll-mt-20">
+        <section id="contact" className="scroll-mt-0">
           <Footer />
         </section>
       </div>

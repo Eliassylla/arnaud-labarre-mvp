@@ -33,17 +33,7 @@ function Header1() {
         {
             title: "Nos Atouts",
             href: "#atouts",
-            description: "Pourquoi nous choisir",
-            items: [
-                {
-                    title: "À propos",
-                    href: "/about",
-                },
-                {
-                    title: "Engagement",
-                    href: "/engagement",
-                },
-            ],
+            description: "Pourquoi nous choisir"
         },
         {
             title: "Atelier",
@@ -59,31 +49,44 @@ function Header1() {
         {
             title: "FAQ",
             href: "#faq",
-            description: "Questions fréquemment posées",
-            items: [
-                {
-                    title: "FAQ",
-                    href: "#faq"
-                }
-            ]
+            description: "Questions fréquemment posées"
         },
         {
             title: "Contact",
             href: "#contact",
-            description: "Coordonnées et informations de contact",
-            items: [
-                {
-                    title: "Contact",
-                    href: "#contact"
-                }
-            ]
+            description: "Coordonnées et informations de contact"
         },
     ];
 
     const [isOpen, setOpen] = useState(false);
     return (
         <header className="w-full z-40 fixed top-0 left-0 bg-[#3E2F1C] text-[#F5F5F5]">
-            <div className="container relative mx-auto min-h-20 px-4 flex gap-4 justify-between items-center">
+            <div className="container relative mx-auto min-h-20 px-4 flex gap-4 items-center justify-between lg:justify-between md:justify-between sm:justify-start">
+                <div className="flex w-12 shrink items-start justify-start lg:hidden">
+                    <Button variant="ghost" onClick={() => setOpen(!isOpen)}>
+                        {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                    </Button>
+                    {isOpen && (
+                        <div className="absolute top-20 border-t flex flex-col w-full right-0 bg-white text-black shadow-lg py-4 px-4 gap-8 z-50">
+                            {navigationItems.map((item) => (
+                                <div key={item.title}>
+                                    <div className="flex flex-col gap-2">
+                                        {item.href ? (
+                                            <Link
+                                                href={item.href}
+                                                className="flex justify-between items-center cursor-pointer"
+                                            >
+                                                <span className="text-lg">{item.title}</span>
+                                            </Link>
+                                        ) : (
+                                            <p className="text-lg">{item.title}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
                 <div className="justify-start items-center gap-4 lg:flex hidden flex-row">
                     <NavigationMenu className="flex justify-start items-start">
                         <NavigationMenuList className="flex justify-start gap-4 flex-row">
@@ -138,48 +141,9 @@ function Header1() {
                     <p className="font-semibold"></p>
                 </div>
                 <div className="flex justify-end w-full gap-4">
-                    <div className="border-r hidden md:inline"></div>
+                    <div className="border-r hidden lg:inline"></div>
                     <Button variant="outline" className="cursor-pointer bg-white text-[#3E2F1C] hover:bg-[#3E2F1C] hover:text-white">Appeler</Button>
                     <Button className="cursor-pointer bg-[#D2A060] text-white hover:bg-[#B8884C]">Devis</Button>
-                </div>
-                <div className="flex w-12 shrink lg:hidden items-end justify-end">
-                    <Button variant="ghost" onClick={() => setOpen(!isOpen)}>
-                        {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-                    </Button>
-                    {isOpen && (
-                        <div className="absolute top-20 border-t flex flex-col w-full right-0 bg-background shadow-lg py-4 container gap-8">
-                            {navigationItems.map((item) => (
-                                <div key={item.title}>
-                                    <div className="flex flex-col gap-2">
-                                        {item.href ? (
-                                            <Link
-                                                href={item.href}
-                                                className="flex justify-between items-center cursor-pointer"
-                                            >
-                                                <span className="text-lg">{item.title}</span>
-                                                <MoveRight className="w-4 h-4 stroke-1 text-muted-foreground" />
-                                            </Link>
-                                        ) : (
-                                            <p className="text-lg">{item.title}</p>
-                                        )}
-                                        {item.items &&
-                                            item.items.map((subItem) => (
-                                                <Link
-                                                    key={subItem.title}
-                                                    href={subItem.href}
-                                                    className="flex justify-between items-center cursor-pointer"
-                                                >
-                                                    <span className="text-muted-foreground">
-                                                        {subItem.title}
-                                                    </span>
-                                                    <MoveRight className="w-4 h-4 stroke-1" />
-                                                </Link>
-                                            ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
                 </div>
             </div>
         </header>
