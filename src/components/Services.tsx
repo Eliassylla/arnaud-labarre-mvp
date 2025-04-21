@@ -121,51 +121,25 @@ export const FeatureSteps = React.memo(function FeatureSteps({
     return () => clearInterval(timer);
   }, [features.length, autoPlayInterval]);
 
-  // Animation pour changer les phrases avec délai supplémentaire et avec 0,2 seconde de décalage
+  // Animation pour changer les phrases avec délai supplémentaire
   useEffect(() => {
     const phraseTimer = setInterval(() => {
       setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
-    }, 4000 + 200); // 4 secondes + 0,2 seconde de décalage
+    }, 4000); // Suppression du délai supplémentaire pour synchroniser
     
     return () => clearInterval(phraseTimer);
   }, []);
 
-  // Animation de transition fluide avec délai
-  const fadeAnimation = {
-    hidden: { opacity: 0 },
+  // Animation de transition fluide, plus rapide et subtile
+  const textAnimation = {
+    hidden: { opacity: 0.4 },
     visible: { 
       opacity: 1,
-      transition: { duration: 1.5, ease: "easeInOut" }
+      transition: { duration: 0.8, ease: "easeInOut" }
     },
     exit: { 
-      opacity: 0,
-      transition: { duration: 1.5, ease: "easeInOut" }
-    }
-  };
-
-  // Animation pour le titre avec délai
-  const titleAnimation = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { duration: 1.5, ease: "easeInOut" }
-    },
-    exit: { 
-      opacity: 0,
-      transition: { duration: 1.5, ease: "easeInOut" }
-    }
-  };
-
-  // Animation pour le paragraphe avec délai supplémentaire
-  const paragraphAnimation = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { duration: 1.5, ease: "easeInOut", delay: 0.2 } // Délai de 0,2 seconde
-    },
-    exit: { 
-      opacity: 0,
-      transition: { duration: 1.5, ease: "easeInOut" }
+      opacity: 0.4,
+      transition: { duration: 0.8, ease: "easeInOut" }
     }
   };
 
@@ -185,7 +159,7 @@ export const FeatureSteps = React.memo(function FeatureSteps({
     initial: { rotate: 0 },
     open: { 
       rotate: 180, 
-      transition: { duration: 0.6, ease: "easeInOut" } 
+      transition: { duration: 0.4, ease: "easeInOut" } 
     },
   };
 
@@ -221,34 +195,20 @@ export const FeatureSteps = React.memo(function FeatureSteps({
                 <div className="text-center relative min-h-[130px]">
                   <AnimatePresence mode="wait">
                     <motion.div
-                      key={`feature-${currentFeature}`}
+                      key={`content-${currentFeature}-${currentPhraseIndex}`}
                       initial="hidden"
                       animate="visible"
                       exit="exit"
-                      variants={fadeAnimation}
+                      variants={textAnimation}
                       className="flex flex-col items-center"
                     >
-                      <motion.h3 
-                        key={`title-${currentFeature}`}
-                        variants={titleAnimation}
-                        initial="hidden"
-                        animate="visible"
-                        exit="exit"
-                        className="text-xl md:text-2xl font-bold mb-2"
-                      >
+                      <h3 className="text-xl md:text-2xl font-bold mb-2">
                         {features[currentFeature].title}
-                      </motion.h3>
+                      </h3>
 
-                      <motion.p 
-                        key={`phrase-${currentPhraseIndex}`}
-                        variants={paragraphAnimation}
-                        initial="hidden"
-                        animate="visible"
-                        exit="exit"
-                        className="text-sm text-[#3E2F1C] text-center px-2 max-w-md"
-                      >
+                      <p className="text-sm text-[#3E2F1C] text-center px-2 max-w-md">
                         {phrases[currentPhraseIndex]}
-                      </motion.p>
+                      </p>
                     </motion.div>
                   </AnimatePresence>
                 </div>
@@ -300,10 +260,10 @@ export const FeatureSteps = React.memo(function FeatureSteps({
                       <div className="px-4 py-2">
                         <motion.p
                           key={`content-${index}`}
-                          initial={{ opacity: 0 }}
+                          initial={{ opacity: 0.4 }}
                           animate={{ 
                             opacity: 1,
-                            transition: { duration: 0.8, ease: "easeInOut", delay: 0.2 } // Ajout du délai de 0,2 seconde
+                            transition: { duration: 0.6, ease: "easeInOut" }
                           }}
                           className="text-sm text-[#3E2F1C]"
                         >
