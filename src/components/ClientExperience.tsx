@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image';
-import { Check } from 'lucide-react';
+// import { Check } from 'lucide-react';
 import { Avatar } from '@/components/ui/avatar';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
