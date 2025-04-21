@@ -20,7 +20,7 @@ export default function Page() {
           <section id="a-propos" className="scroll-mt-20">
             <ClientExperience />
           </section>
-          <section id="services" className="scroll-mt-10">
+          <section id="services" className="scroll-mt-20">
             <ServicesSectionExample />
           </section>
           <section id="atouts" className="scroll-mt-10">

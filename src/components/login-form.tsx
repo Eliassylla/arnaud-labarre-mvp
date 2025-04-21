@@ -14,38 +14,38 @@ export function LoginForm({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card className="w-full bg-[#DEB887] dark:bg-[#5B270B] border border-[#A55B53] dark:border-[#3F1F14] shadow-md">
+  <div className={cn("w-full max-w-lg mx-auto p-6", className)} {...props}>
+      <Card className="w-full bg-[#f3e5d0] border border-[#A55B53] shadow-lg p-6 rounded-2xl">
         <CardHeader>
-          <CardTitle className="text-2xl">Demander votre devis gratuit</CardTitle>
+          <CardTitle className="font-semibold text-[#3E2F1C]">Demander votre devis gratuit</CardTitle>
         </CardHeader>
         <CardContent>
-          <form className="flex flex-col gap-6">
-            <div className="grid gap-2">
-              <Label htmlFor="name">Nom</Label>
-              <Input id="name" type="text" placeholder="Votre nom" required />
+          <form className="flex flex-col gap-1" noValidate autoComplete="off">
+            <div className="grid gap-0.5">
+              <Label htmlFor="name" className="text-[#3E2F1C]">Nom</Label>
+              <Input id="name" type="text" placeholder="Votre nom" required className="w-full p-3 text-base h-9 rounded-2xl focus:outline-none" />
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="m@exemple.com" required />
+            <div className="grid gap-0.5">
+              <Label htmlFor="email" className="text-[#3E2F1C]">Email</Label>
+              <Input id="email" type="email" placeholder="m@exemple.com" required className="w-full p-3 text-base h-9 rounded-2xl focus:outline-none" />
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="service">Service souhaité</Label>
-              <Input id="service" type="text" placeholder="Ex: Agencement sur mesure" required />
+            <div className="grid gap-0.5">
+              <Label htmlFor="service" className="text-[#3E2F1C]">Service souhaité</Label>
+              <Input id="service" type="text" placeholder="Ex: Agencement sur mesure" required className="w-full p-3 text-base h-9 rounded-2xl focus:outline-none" />
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="details">Détails du projet</Label>
+            <div className="grid gap-0.5">
+              <Label htmlFor="details" className="text-[#3E2F1C]">Détails du projet</Label>
               <textarea
                 id="details"
                 rows={4}
-                className="border p-2 rounded bg-white"
+                className="w-full p-3 h-24 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#3E2F1C] dark:bg-background dark:text-foreground"
                 placeholder="Décrivez votre projet"
                 required
               />
             </div>
             <Button
               type="submit"
-              className="w-full bg-black text-white hover:bg-[#3E2F1C] cursor-pointer"
+              className="w-full bg-[#3E2F1C] text-white hover:bg-[#2d2316] focus:ring-2 focus:ring-offset-2 focus:ring-[#3E2F1C] rounded-xl text-sm"
             >
               Envoyer
             </Button>

@@ -87,25 +87,25 @@ export function FeatureSteps({
   }, [progress, features.length, autoPlayInterval])
 
   return (
-    <div className={cn("p-8 md:p-12 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
+    <div className={cn("p-4 md:p-6 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
       <div className="w-full">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 text-center">{title}</h2>
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-center">{title}</h2>
 
-        <div className="flex flex-col grid-cols-1 md:grid md:grid-cols-2 gap-6 md:gap-10 md:items-center">
+        <div className="flex flex-col grid-cols-1 md:grid md:grid-cols-2 gap-2 md:gap-6 md:items-center">
           <AnimatePresence mode="wait">
             {isPortraitMobile ? (
-              <motion.div
-                key={currentFeature}
-                className="text-center min-h-[160px] flex flex-col justify-center items-center overflow-hidden"
-                initial={{ opacity: 0, y: 30 }}
+            <motion.div
+                     key={currentFeature}
+                     className="text-center min-h-[120px] flex flex-col justify-center items-center overflow-hidden gap-0"
+                initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0, transition: { duration: 1.2 } }}
-                exit={{ opacity: 0, y: -30, transition: { delay: 2, duration: 1 } }}
+                exit={{ opacity: 0, y: -5, transition: { delay: 1, duration: 0.8 } }}
               >
                 <h3 className="text-xl font-semibold mb-2">{features[currentFeature].title}</h3>
                 <p className="text-sm text-[#3E2F1C]">{features[currentFeature].content}</p>
               </motion.div>
             ) : (
-              <div className="order-2 md:order-1 space-y-8">
+              <div className="order-2 md:order-1 space-y-4">
                 {features.map((feature, index) => (
                   <motion.div
                     key={index}
@@ -140,8 +140,8 @@ export function FeatureSteps({
           </AnimatePresence>
 
           <div className="order-1 md:order-2">
-            <div className="w-full max-w-md mx-auto flex flex-col items-start gap-6 p-6 px-4 md:px-10">
-              <div className="w-full flex flex-col gap-6">
+          <div className="w-full max-w-lg mx-auto flex flex-col items-start gap-1 p-4 px-2 md:px-4">
+              <div className="w-full flex flex-col gap-0">
                 <LoginForm />
               </div>
             </div>
