@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image';
+import { useState, useEffect } from "react";
 // import { Check } from 'lucide-react';
 import { Avatar } from '@/components/ui/avatar';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -8,6 +9,23 @@ import 'swiper/css/autoplay';
 import { Autoplay } from 'swiper/modules';
 
 export default function ClientExperience() {
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  const [isPortraitMode, setIsPortraitMode] = useState(false);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      const isSmallScreen = window.innerWidth < 1024;
+      const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+      
+      setIsMobileOrTablet(isSmallScreen);
+      setIsPortraitMode(isPortrait);
+    };
+    
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  
   return (
     <section className="w-full py-8 bg-[#F9F6F1] overflow-visible">
       <div className="container mx-auto px-4 md:px-6 flex flex-col items-center">
@@ -50,12 +68,15 @@ export default function ClientExperience() {
 
           {/* Content section - centered on mobile and tablet, left-aligned on desktop */}
           <div className="text-center lg:text-left w-full max-w-md mx-auto px-4 md:px-0">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-[#3E2F1C] text-center lg:text-left pt-2">
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-[#3E2F1C] text-center lg:text-left pt-2">
               Arnaud Labarre crée du mobilier sur mesure en bois noble depuis plus de 20 ans
-            </h2>
-            <p className="text-sm sm:text-base leading-relaxed mb-8 text-[#3E2F1C] text-center lg:text-left max-w-lg mx-auto lg:mx-0">
-              Arnaud Labarre conçoit, restaure et aménage du mobilier en bois noble sur mesure. Chaque pièce allie savoir-faire artisanal et design contemporain pour sublimer votre intérieur.
-            </p>
+            </h3>
+            {/* N'afficher le paragraphe que sur desktop OU en mode paysage */}
+            {(!isMobileOrTablet || !isPortraitMode) && (
+              <p className="text-sm sm:text-base leading-relaxed mb-8 text-[#3E2F1C] text-center lg:text-left max-w-lg mx-auto lg:mx-0">
+                Arnaud Labarre conçoit, restaure et aménage du mobilier en bois noble sur mesure. Chaque pièce allie savoir-faire artisanal et design contemporain pour sublimer votre intérieur.
+              </p>
+            )}
           </div>
         </div>
       </div>
