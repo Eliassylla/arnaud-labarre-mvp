@@ -40,7 +40,7 @@ function Feature() {
   return (
   <div className="w-full pt-4 lg:pt-8 pb-8 lg:pb-16 bg-[#F8F5EF]">
       <div className="container px-4 md:px-6 mx-auto">
-        <div className="flex justify-center lg:hidden mb-3">
+        <div className="flex justify-start lg:hidden mb-3">
           <Badge className="bg-[#DEB887] text-black dark:bg-[#5B270B] dark:text-white px-3 py-1 text-sm">
             Atelier
           </Badge>
