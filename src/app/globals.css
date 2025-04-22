@@ -2,6 +2,12 @@
 @import "tw-animate-css";
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 120px;
+}
+
+/* Styles spécifiques pour l'élément form */
+#form {
+  scroll-margin-top: 120px;
 }
 
 @custom-variant dark (&:is(.dark *));

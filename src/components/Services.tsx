@@ -172,7 +172,8 @@ export function FeatureSteps({
             </div>
           )}
 
-          <div id="form" className="order-1 md:order-2 w-full pt-4 md:pt-0">
+          <div id="form" className="order-1 md:order-2 w-full pt-6 md:pt-8" style={{ scrollMarginTop: "120px" }}>
+            <h3 className="text-xl font-semibold text-center mb-4">Demander votre devis gratuit</h3>
             <div className="w-full flex justify-center">
               <LoginForm />
             </div>
