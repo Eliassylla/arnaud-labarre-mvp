@@ -144,7 +144,7 @@ function Header1() {
                     <div className="border-r hidden lg:inline"></div>
                     <Button variant="outline" className="cursor-pointer bg-white text-[#3E2F1C] hover:bg-[#3E2F1C] hover:text-white">Appeler</Button>
                     <Link href="#form">
-                        <Button className="cursor-pointer bg-[#D2A060] text-white hover:bg-[#B8884C]">Devis</Button>
+                        <Button className="cursor-pointer bg-[#3E2F1C] text-white hover:bg-[#2d2316]">Devis</Button>
                     </Link>
                 </div>
             </div>
