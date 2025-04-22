@@ -14,11 +14,16 @@ import {
 
 function Feature() {
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  const [isPortraitMode, setIsPortraitMode] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   
   useEffect(() => {
     const handleResize = () => {
-      setIsMobileOrTablet(window.innerWidth < 1024);
+      const isSmallScreen = window.innerWidth < 1024;
+      const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+      
+      setIsMobileOrTablet(isSmallScreen);
+      setIsPortraitMode(isPortrait);
     };
     
     handleResize();
@@ -37,14 +42,20 @@ function Feature() {
     '/images/real4.webp',
   ];
 
+  // Afficher le badge seulement si on est en mode desktop OU en mode tablette paysage
+  const shouldShowBadge = !isMobileOrTablet || (isMobileOrTablet && !isPortraitMode);
+
   return (
   <div className="w-full pt-4 lg:pt-8 pb-8 lg:pb-16 bg-[#F8F5EF]">
       <div className="container px-4 md:px-6 mx-auto">
-        <div className="flex justify-start lg:hidden mb-3">
-          <Badge className="bg-[#DEB887] text-black dark:bg-[#5B270B] dark:text-white px-3 py-1 text-sm">
-            Atelier
-          </Badge>
-        </div>
+        {/* Badge pour les petits écrans en mode paysage uniquement */}
+        {isMobileOrTablet && !isPortraitMode && (
+          <div className="flex justify-start mb-3">
+            <Badge className="bg-[#DEB887] text-black dark:bg-[#5B270B] dark:text-white px-3 py-1 text-sm">
+              Atelier
+            </Badge>
+          </div>
+        )}
         
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#3E2F1C] dark:text-[#F8F5EF] mb-8 text-center mx-auto">
           Nos réalisations
@@ -52,11 +63,14 @@ function Feature() {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10">
           <div className="flex gap-4 flex-col items-center lg:items-start justify-center h-full">
-            <div className="hidden lg:block">
-              <Badge className="bg-[#DEB887] text-black dark:bg-[#5B270B] dark:text-white px-3 py-1 text-sm">
-                Atelier
-              </Badge>
-            </div>
+            {/* Badge pour desktop uniquement */}
+            {!isMobileOrTablet && (
+              <div className="block">
+                <Badge className="bg-[#DEB887] text-black dark:bg-[#5B270B] dark:text-white px-3 py-1 text-sm">
+                  Atelier
+                </Badge>
+              </div>
+            )}
             <div className="flex gap-2 flex-col w-full">
               {isMobileOrTablet ? (
                 <>
