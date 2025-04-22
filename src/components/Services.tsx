@@ -96,21 +96,23 @@ export function FeatureSteps({
   return (
     <div className={cn("p-8 md:p-12 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
       <div className="w-full">
-        <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center ${isPortraitMobile ? 'mb-1' : 'mb-6'}`}>{title}</h2>
+        <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mx-auto ${isPortraitMobile ? 'mb-1' : 'mb-6'}`}>{title}</h2>
 
         <div className={`flex flex-col md:grid md:grid-cols-2 ${isPortraitMobile ? 'gap-3' : 'gap-6'} md:gap-10 items-start`}>
           {isPortraitMobile ? (
-            <div className="w-full">
-              <div className="flex justify-center mb-3">
+            <div className="w-full flex justify-center">
+              <div className="w-full flex justify-center mb-3">
                 <div className="w-full max-w-md border rounded-md overflow-hidden">
                   <button 
                     className="w-full flex items-center justify-center gap-2 py-2 text-base font-medium hover:bg-[#f1ede5] transition-colors"
                     onClick={toggleServices}
                   >
-                    <span>Voir tous les services</span>
-                    <ChevronDown 
-                      className={`h-4 w-4 transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`}
-                    />
+                    <span className="inline-flex items-center justify-center text-center">
+                      Voir tous les services
+                      <ChevronDown 
+                        className={`h-4 w-4 ml-2 transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`}
+                      />
+                    </span>
                   </button>
                 
                   <div 
