@@ -90,34 +90,36 @@ export function FeatureSteps({
   return (
     <div className={cn("p-8 md:p-12 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
       <div className="w-full">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 text-center">{title}</h2>
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-center">{title}</h2>
 
         <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-10 items-start">
           {isPortraitMobile ? (
             <div className="w-full">
-              {/* Accordéon sans répéter le titre */}
-              <Accordion type="single" collapsible className="w-full" defaultValue="services">
-                <AccordionItem value="services">
-                  <AccordionTrigger>
-                    <span className="text-base font-medium">Voir tous les services</span>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    {/* Sous-accordéon pour chaque service */}
-                    <Accordion type="multiple" className="w-full">
-                      {features.map((feature, idx) => (
-                        <AccordionItem value={String(idx)} key={idx}>
-                          <AccordionTrigger>
-                            <span className="text-base font-medium">{feature.title}</span>
-                          </AccordionTrigger>
-                          <AccordionContent>
-                            <p className="text-sm text-[#3E2F1C]">{feature.content}</p>
-                          </AccordionContent>
-                        </AccordionItem>
-                      ))}
-                    </Accordion>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+              {/* Accordéon sans répéter le titre - marge réduite */}
+              <div className="mb-6">
+                <Accordion type="single" collapsible className="w-full" defaultValue="services">
+                  <AccordionItem value="services" className="border-t-0">
+                    <AccordionTrigger>
+                      <span className="text-base font-medium">Voir tous les services</span>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      {/* Sous-accordéon pour chaque service */}
+                      <Accordion type="multiple" className="w-full">
+                        {features.map((feature, idx) => (
+                          <AccordionItem value={String(idx)} key={idx}>
+                            <AccordionTrigger>
+                              <span className="text-base font-medium">{feature.title}</span>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <p className="text-sm text-[#3E2F1C]">{feature.content}</p>
+                            </AccordionContent>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
             </div>
           ) : (
             <div className="order-2 md:order-1 space-y-8 w-full">
