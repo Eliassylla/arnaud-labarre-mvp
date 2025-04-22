@@ -172,8 +172,8 @@ export function FeatureSteps({
             </div>
           )}
 
-          <div className="order-1 md:order-2 w-full">
-            <div id="form" className="w-full flex justify-center">
+          <div id="form" className="order-1 md:order-2 w-full pt-4 md:pt-0">
+            <div className="w-full flex justify-center">
               <LoginForm />
             </div>
           </div>
