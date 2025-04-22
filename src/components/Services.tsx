@@ -96,16 +96,15 @@ export function FeatureSteps({
   return (
     <div className={cn("p-8 md:p-12 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
       <div className="w-full">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-center">{title}</h2>
+        <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center ${isPortraitMobile ? 'mb-1' : 'mb-6'}`}>{title}</h2>
 
-        <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-10 items-start">
+        <div className={`flex flex-col md:grid md:grid-cols-2 ${isPortraitMobile ? 'gap-3' : 'gap-6'} md:gap-10 items-start`}>
           {isPortraitMobile ? (
             <div className="w-full">
-              {/* Accordéon personnalisé centré */}
-              <div className="flex justify-center mb-6">
+              <div className="flex justify-center mb-3">
                 <div className="w-full max-w-md border rounded-md overflow-hidden">
                   <button 
-                    className="w-full flex items-center justify-center gap-2 py-3 text-base font-medium hover:bg-[#f1ede5] transition-colors"
+                    className="w-full flex items-center justify-center gap-2 py-2 text-base font-medium hover:bg-[#f1ede5] transition-colors"
                     onClick={toggleServices}
                   >
                     <span>Voir tous les services</span>
@@ -114,7 +113,6 @@ export function FeatureSteps({
                     />
                   </button>
                 
-                  {/* Contenu de l'accordéon */}
                   <div 
                     className={`overflow-hidden transition-all duration-300 ${
                       isServicesOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
