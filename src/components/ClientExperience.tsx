@@ -68,7 +68,7 @@ export default function ClientExperience() {
 
           {/* Content section - centered on mobile and tablet, left-aligned on desktop */}
           <div className="text-center lg:text-left w-full max-w-md mx-auto px-4 md:px-0">
-            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-[#3E2F1C] text-center lg:text-left pt-2">
+            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-[#3E2F1C] text-center lg:text-left pt-2">
               Arnaud Labarre crée du mobilier sur mesure en bois noble depuis plus de 20 ans
             </h3>
             {/* N'afficher le paragraphe que sur desktop OU en mode paysage */}
