@@ -41,7 +41,7 @@ function Feature() {
                 Donnez vie à votre intérieur avec un mobilier sur mesure
               </h3>
               <p className="text-sm md:text-base lg:text-lg max-w-xl lg:max-w-sm leading-relaxed tracking-tight text-left text-neutral-700 dark:text-neutral-300">
-                Depuis 20 ans, Arnaud Labarre conçoit des meubles d'exception en bois noble, alliant savoir-faire traditionnel et design moderne pour sublimer votre espace.
+                Depuis 20 ans, Arnaud Labarre conçoit des meubles d&apos;exception en bois noble, alliant savoir-faire traditionnel et design moderne pour sublimer votre espace.
               </p>
             </div>
           </div>

@@ -30,7 +30,7 @@ export default function ValueProps() {
             <Edit3 className="size-6 text-primary mb-2" />
             <h3 className="text-lg font-semibold mb-1">Design personnalisé</h3>
             <p className="text-sm text-[#3E2F1C]">
-              Créations sur mesure pour s'intégrer parfaitement à votre intérieur.
+              Créations sur mesure pour s&apos;intégrer parfaitement à votre intérieur.
             </p>
           </div>
         </div>
