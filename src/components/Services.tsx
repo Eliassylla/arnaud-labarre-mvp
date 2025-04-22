@@ -1,131 +1,165 @@
 "use client"
-import React, { useState, useEffect } from "react"
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
+
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "@/lib/utils"
 import { LoginForm } from "@/components/login-form"
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 
-// Hook pour détecter la taille de l'écran
-function useWindowSize() {
-  const [windowSize, setWindowSize] = useState({
-    width: 0,
-    height: 0,
-    isPortraitMobile: false,
-    isTabletPortrait: false,
-    isDesktop: false,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      const isPortraitMobile = width < 768 && window.matchMedia("(orientation: portrait)").matches;
-      const isTabletPortrait = width >= 768 && width < 1024 && window.matchMedia("(orientation: portrait)").matches;
-      const isDesktop = width >= 1024 || window.matchMedia("(orientation: landscape)").matches;
-
-      setWindowSize({
-        width,
-        height,
-        isPortraitMobile,
-        isTabletPortrait,
-        isDesktop,
-      });
-    };
-
-    handleResize(); // Initial check
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  return windowSize;
+interface Feature {
+  step: string
+  title?: string
+  content: string
+  image: string
+}
+export default function ServicesSectionExample() {
+  const features = [
+    {
+      step: "01",
+      title: "Mobilier personnalisé haut de gamme",
+      content: "Création de meubles uniques en bois noble, pensés pour s'adapter parfaitement à votre intérieur.",
+      image: "/images/service-mobilier.jpg",
+    },
+    {
+      step: "02",
+      title: "Restauration & rénovation",
+      content: "Remise en état de vos meubles anciens avec des techniques traditionnelles, pour leur redonner toute leur noblesse.",
+      image: "/images/service-restauration.jpg",
+    },
+    {
+      step: "03",
+      title: "Agencement intérieur personnalisé",
+      content: "Conception d'espaces optimisés et esthétiques, adaptés à vos envies et à la configuration de votre habitat.",
+      image: "/images/service-amenagement.jpg",
+    },
+    {
+      step: "04",
+      title: "Conseil en design & finitions",
+      content: "Accompagnement sur le choix des essences, des lignes et des finitions pour un rendu à la fois harmonieux et fonctionnel.",
+      image: "/images/service-conseil.jpg",
+    },
+  ];
+ 
+  return (
+    <div className="w-full">
+      <FeatureSteps features={features} title="Nos Services" autoPlayInterval={1000} />
+    </div>
+  );
 }
 
-export default function Services() {
-  const { isPortraitMobile, isTabletPortrait, isDesktop } = useWindowSize();
-  const needsMainAccordion = isPortraitMobile || isTabletPortrait;
+interface FeatureStepsProps {
+  features: Feature[]
+  className?: string
+  title?: string
+  autoPlayInterval?: number
+}
+
+export function FeatureSteps({
+  features,
+  className,
+  title = "How to get Started",
+  autoPlayInterval = 6000,
+}: FeatureStepsProps) {
+  const [currentFeature, setCurrentFeature] = useState(0)
+  const [progress, setProgress] = useState(0)
+  const [isPortraitMobile, setIsPortraitMobile] = useState(false)
   
-  const services = [
-    {
-      title: "Création de meubles",
-      description: "Création de meubles uniques en bois noble pour votre intérieur."
-    },
-    {
-      title: "Restauration",
-      description: "Restauration de pièces anciennes avec des techniques traditionnelles."
-    },
-    {
-      title: "Aménagement",
-      description: "Solutions fonctionnelles et esthétiques pour transformer vos espaces."
-    },
-    {
-      title: "Conseils personnalisés",
-      description: "Accompagnement expert pour harmoniser matériaux et style."
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPortraitMobile(window.innerWidth < 768 && window.matchMedia("(orientation: portrait)").matches)
     }
-  ]
+  
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (progress < 100) {
+        setProgress((prev) => prev + 100 / (autoPlayInterval / 100))
+      } else {
+        setCurrentFeature((prev) => (prev + 1) % features.length)
+        setProgress(0)
+      }
+    }, 100)
+
+    return () => clearInterval(timer)
+  }, [progress, features.length, autoPlayInterval])
 
   return (
-    <div className="w-full px-4 py-8 bg-[#F9F6F1] text-[#3E2F1C]">
-      {needsMainAccordion ? (
-        // Version mobile/tablette portrait - avec accordéon principal
-        <div className="mx-auto max-w-3xl">
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="services">
-              <AccordionTrigger className="text-xl font-semibold">
-                Nos services
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="space-y-4 mt-4">
-                  {services.map((service, index) => (
-                    <Accordion key={index} type="single" collapsible className="w-full border-b border-gray-200 pb-2">
-                      <AccordionItem value={`service-${index}`}>
-                        <AccordionTrigger>
-                          <h3 className="text-lg font-medium">{service.title}</h3>
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <p className="mt-2 text-gray-600">{service.description}</p>
-                        </AccordionContent>
-                      </AccordionItem>
+    <div className={cn("p-8 md:p-12 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
+      <div className="w-full">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 text-center">{title}</h2>
+
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-10 items-start">
+          {isPortraitMobile ? (
+            <div className="w-full">
+              {/* Accordéon principal "Nos Services" */}
+              <Accordion type="single" collapsible className="w-full" defaultValue="services">
+                <AccordionItem value="services">
+                  <AccordionTrigger>
+                    <h3 className="text-xl font-semibold mb-2 w-full text-center">{title}</h3>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    {/* Sous-accordéon pour chaque service */}
+                    <Accordion type="multiple" className="w-full">
+                      {features.map((feature, idx) => (
+                        <AccordionItem value={String(idx)} key={idx}>
+                          <AccordionTrigger>
+                            <span className="text-base font-medium">{feature.title}</span>
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <p className="text-sm text-[#3E2F1C]">{feature.content}</p>
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
                     </Accordion>
-                  ))}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-          
-          {/* Formulaire version mobile - placé en dehors de l'accordéon */}
-          <div id="form" className="mt-8">
-            <LoginForm />
-          </div>
-        </div>
-      ) : (
-        // Version desktop/tablette paysage - sans accordéon principal
-        <div className="container mx-auto max-w-6xl">
-          {/* Titre principal sans accordéon */}
-          <h2 className="text-3xl font-bold mb-8 text-center">Nos services</h2>
-          
-          <div className="flex flex-row gap-8">
-            {/* Colonne gauche - Accordéons des services */}
-            <div className="w-1/2 space-y-4">
-              {services.map((service, index) => (
-                <Accordion key={index} type="single" collapsible className="w-full">
-                  <AccordionItem value={`service-${index}`}>
-                    <AccordionTrigger>
-                      <h3 className="text-lg font-medium">{service.title}</h3>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <p className="mt-2 text-gray-600">{service.description}</p>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          ) : (
+            <div className="order-2 md:order-1 space-y-8 w-full">
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  className="flex items-center gap-6 md:gap-8"
+                  initial={{ opacity: 0.3 }}
+                  animate={{ opacity: index === currentFeature ? 1 : 0.3 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <motion.div
+                    className={cn(
+                      "w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-2",
+                      index === currentFeature
+                        ? "bg-primary border-primary text-primary-foreground scale-110"
+                        : "bg-muted border-muted-foreground",
+                    )}
+                  >
+                    {index <= currentFeature ? (
+                      <span className="text-lg font-bold">✓</span>
+                    ) : (
+                      <span className="text-lg font-semibold">{index + 1}</span>
+                    )}
+                  </motion.div>
+
+                  <div className="flex-1">
+                    <h3 className="text-xl md:text-2xl font-semibold">{feature.title || feature.step}</h3>
+                    <p className="text-sm md:text-lg text-[#3E2F1C]">{feature.content}</p>
+                  </div>
+                </motion.div>
               ))}
             </div>
-            
-            {/* Colonne droite - Formulaire sans cadran */}
-            <div id="form" className="w-1/2 pt-2">
+          )}
+
+          <div className="order-1 md:order-2 w-full">
+            <div className="w-full flex justify-center">
               <LoginForm />
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }

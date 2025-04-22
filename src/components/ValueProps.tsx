@@ -8,7 +8,7 @@ export default function ValueProps() {
   return (
     <section className="bg-[#f8f5ef] border-t border-[#e0dcd5] py-24">
       <div className="container mx-auto px-4">
-        <h2 className="text-center text-3xl md:text-4xl font-bold text-[#3E2F1C] dark:text-[#F8F5EF] mb-8">
+        <h2 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold text-[#3E2F1C] dark:text-[#F8F5EF] mb-8">
           Pourquoi choisir Arnaud Labarre ?
         </h2>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-12">

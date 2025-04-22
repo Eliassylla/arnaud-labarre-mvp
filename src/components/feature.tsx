@@ -25,7 +25,7 @@ function Feature() {
           </Badge>
         </div>
         
-        <h2 className="text-3xl md:text-4xl font-bold text-[#3E2F1C] dark:text-[#F8F5EF] mb-8 text-center mx-auto">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#3E2F1C] dark:text-[#F8F5EF] mb-8 text-center mx-auto">
           Nos réalisations
         </h2>
         
