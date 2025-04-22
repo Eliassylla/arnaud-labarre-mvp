@@ -58,19 +58,17 @@ function Feature() {
               </Badge>
             </div>
             <div className="flex gap-2 flex-col w-full">
-              <h3 className="text-xl md:text-3xl lg:text-5xl tracking-tighter lg:max-w-xl font-regular text-center lg:text-left">
-                Donnez vie à votre intérieur avec un mobilier sur mesure
-              </h3>
-              
               {isMobileOrTablet ? (
-                <div className="w-full mt-2">
+                <>
                   <button 
-                    onClick={toggleDescription} 
-                    className="flex items-center justify-center gap-2 w-full py-2 bg-[#DEB887] text-[#3E2F1C] rounded-md font-medium"
+                    onClick={toggleDescription}
+                    className="flex items-center justify-between w-full border border-[#DEB887] bg-[#f3e5d0] px-4 py-3 rounded-md hover:bg-[#ecddc8] transition-colors"
                   >
-                    <span>En savoir plus</span>
+                    <h3 className="text-xl md:text-2xl tracking-tighter font-regular text-center">
+                      Donnez vie à votre intérieur avec un mobilier sur mesure
+                    </h3>
                     <ChevronDown 
-                      className={`h-4 w-4 transition-transform duration-200 ${isDescriptionOpen ? 'rotate-180' : ''}`}
+                      className={`h-5 w-5 ml-2 text-[#3E2F1C] flex-shrink-0 transition-transform duration-200 ${isDescriptionOpen ? 'rotate-180' : ''}`}
                     />
                   </button>
                   
@@ -79,15 +77,20 @@ function Feature() {
                       isDescriptionOpen ? 'max-h-[500px] opacity-100 mt-2' : 'max-h-0 opacity-0'
                     }`}
                   >
-                    <p className="text-sm md:text-base leading-relaxed tracking-tight text-center text-neutral-700 dark:text-neutral-300 px-2 py-3 bg-[#f3e5d0] rounded-md">
+                    <p className="text-sm md:text-base leading-relaxed tracking-tight text-center text-neutral-700 dark:text-neutral-300 px-4 py-3 bg-[#f8f4ed] rounded-md">
                       Depuis 20 ans, Arnaud Labarre conçoit des meubles d&apos;exception en bois noble, alliant savoir-faire traditionnel et design moderne pour sublimer votre espace.
                     </p>
                   </div>
-                </div>
+                </>
               ) : (
-                <p className="text-sm md:text-base lg:text-lg max-w-xl lg:max-w-sm leading-relaxed tracking-tight text-left text-neutral-700 dark:text-neutral-300">
-                  Depuis 20 ans, Arnaud Labarre conçoit des meubles d&apos;exception en bois noble, alliant savoir-faire traditionnel et design moderne pour sublimer votre espace.
-                </p>
+                <>
+                  <h3 className="text-xl md:text-3xl lg:text-5xl tracking-tighter lg:max-w-xl font-regular text-center lg:text-left">
+                    Donnez vie à votre intérieur avec un mobilier sur mesure
+                  </h3>
+                  <p className="text-sm md:text-base lg:text-lg max-w-xl lg:max-w-sm leading-relaxed tracking-tight text-left text-neutral-700 dark:text-neutral-300">
+                    Depuis 20 ans, Arnaud Labarre conçoit des meubles d&apos;exception en bois noble, alliant savoir-faire traditionnel et design moderne pour sublimer votre espace.
+                  </p>
+                </>
               )}
             </div>
           </div>
