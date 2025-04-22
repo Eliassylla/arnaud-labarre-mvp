@@ -42,9 +42,6 @@ function Feature() {
     '/images/real4.webp',
   ];
 
-  // Afficher le badge seulement si on est en mode desktop OU en mode tablette paysage
-  const shouldShowBadge = !isMobileOrTablet || (isMobileOrTablet && !isPortraitMode);
-
   return (
   <div className="w-full pt-4 lg:pt-8 pb-8 lg:pb-16 bg-[#F8F5EF]">
       <div className="container px-4 md:px-6 mx-auto">
