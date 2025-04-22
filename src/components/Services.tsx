@@ -95,11 +95,11 @@ export function FeatureSteps({
         <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-10 items-start">
           {isPortraitMobile ? (
             <div className="w-full">
-              {/* Accordéon principal "Nos Services" */}
+              {/* Accordéon sans répéter le titre */}
               <Accordion type="single" collapsible className="w-full" defaultValue="services">
                 <AccordionItem value="services">
                   <AccordionTrigger>
-                    <h3 className="text-xl font-semibold mb-2 w-full text-center">{title}</h3>
+                    <span className="text-base font-medium">Voir tous les services</span>
                   </AccordionTrigger>
                   <AccordionContent>
                     {/* Sous-accordéon pour chaque service */}
