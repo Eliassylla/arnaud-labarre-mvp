@@ -92,7 +92,7 @@ export default function Services() {
           </Accordion>
           
           {/* Formulaire version mobile - placé en dehors de l'accordéon */}
-          <div className="mt-8">
+          <div id="form" className="mt-8">
             <LoginForm />
           </div>
         </div>
@@ -120,7 +120,7 @@ export default function Services() {
             </div>
             
             {/* Colonne droite - Formulaire sans cadran */}
-            <div className="w-1/2 pt-2">
+            <div id="form" className="w-1/2 pt-2">
               <LoginForm />
             </div>
           </div>

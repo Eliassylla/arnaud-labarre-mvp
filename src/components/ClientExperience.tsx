@@ -11,6 +11,11 @@ export default function ClientExperience() {
   return (
     <section className="w-full py-16 bg-[#F9F6F1] overflow-visible">
       <div className="container mx-auto px-4 md:px-6 flex flex-col items-center">
+        {/* Titre "À propos" centré pour toutes les versions */}
+        <h2 className="text-3xl font-bold mb-12 text-center text-[#3E2F1C]">
+          À propos
+        </h2>
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 w-full max-w-5xl mx-auto">
           {/* Avatar section - centered in all viewports */}
           <div className="flex justify-center w-full">
