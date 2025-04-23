@@ -41,7 +41,7 @@ export default function ClientExperience() {
   const avatarThreshold = isMobilePortrait ? 0.1 : 0.2;
   
   return (
-    <section className="w-full py-8 bg-[#F9F6F1] overflow-visible">
+    <section className="w-full py-8 md:py-12 lg:py-16 md:pb-20 lg:pb-28 bg-[#F9F6F1] overflow-visible">
       <div className="container mx-auto px-4 md:px-6 flex flex-col items-center">
         {/* Titre "À propos" centré pour toutes les versions */}
         <ScrollAnimation animation="fade-up" duration={titleDuration} threshold={titleThreshold}>

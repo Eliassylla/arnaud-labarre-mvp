@@ -103,7 +103,7 @@ export function FeatureSteps({
   };
 
   return (
-    <div className={cn("p-8 md:p-12 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
+    <div className={cn("p-8 md:p-12 md:pb-20 lg:pb-28 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
       <div className="w-full">
         <ScrollAnimation animation="fade-up" duration={titleDuration} threshold={titleThreshold}>
           <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mx-auto ${isPortraitMobile ? 'mb-1' : 'mb-10'}`}>
