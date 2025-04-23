@@ -30,32 +30,27 @@ html {
   width: 100% !important;
 }
 
-/* Ajustement spécifique pour tablette en mode portrait */
+/* Styles pour la vue tablette portrait */
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-  .tablet-form, .form-portrait {
-    width: 85% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    transform: translateX(0) !important;
-  }
-  
-  #form {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
+  /* Styles généraux pour la section Services */
+  #services {
     max-width: 100% !important;
-    position: relative !important;
+    overflow-x: hidden !important;
   }
   
+  /* Assurer que le formulaire est centré et avec la bonne largeur */
   #form > div {
-    width: 90% !important;
+    width: 100% !important;
     max-width: 450px !important;
     margin: 0 auto !important;
-    position: relative !important;
-    left: 0 !important;
-    transform: translateX(0) !important;
+  }
+  
+  /* Assurer que le contenu est centré */
+  .max-w-md {
+    max-width: 450px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 90% !important;
   }
 }
 

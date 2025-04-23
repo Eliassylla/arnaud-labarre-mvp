@@ -14,31 +14,33 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-  // Conserver uniquement le debug info pour aider au développement
+  // Informations de débogage pour le développement
   const [debugInfo, setDebugInfo] = useState({ width: 0, height: 0, isPortrait: false });
 
   useEffect(() => {
-    const updateDebugInfo = () => {
-      const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-      setDebugInfo({
-        width: window.innerWidth,
-        height: window.innerHeight,
-        isPortrait
-      });
-    };
+    if (process.env.NODE_ENV === 'development') {
+      const updateDebugInfo = () => {
+        const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+        setDebugInfo({
+          width: window.innerWidth,
+          height: window.innerHeight,
+          isPortrait
+        });
+      };
 
-    updateDebugInfo();
-    window.addEventListener('resize', updateDebugInfo);
-    window.addEventListener('orientationchange', updateDebugInfo);
+      updateDebugInfo();
+      window.addEventListener('resize', updateDebugInfo);
+      window.addEventListener('orientationchange', updateDebugInfo);
 
-    return () => {
-      window.removeEventListener('resize', updateDebugInfo);
-      window.removeEventListener('orientationchange', updateDebugInfo);
-    };
+      return () => {
+        window.removeEventListener('resize', updateDebugInfo);
+        window.removeEventListener('orientationchange', updateDebugInfo);
+      };
+    }
   }, []);
 
   return (
-  <div className={cn("w-full", className)} {...props}>
+    <div className={cn("w-full mx-auto", className)} {...props}>
       <Card className="w-full bg-[#f3e5d0] border border-[#A55B53] shadow-lg p-2 sm:p-3 md:p-4 rounded-2xl">
         <CardHeader className="p-3 md:p-4">
           <CardTitle className="font-semibold text-[#3E2F1C] text-center">Demander votre devis gratuit</CardTitle>

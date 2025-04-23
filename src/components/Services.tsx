@@ -65,16 +65,26 @@ export function FeatureSteps({
   const [currentFeature, setCurrentFeature] = useState(0)
   const [progress, setProgress] = useState(0)
   const [isPortraitMobile, setIsPortraitMobile] = useState(false)
+  const [isTabletPortrait, setIsTabletPortrait] = useState(false)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
   
   useEffect(() => {
     const handleResize = () => {
-      setIsPortraitMobile(window.innerWidth <= 1024 && window.matchMedia("(orientation: portrait)").matches)
+      const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+      const isMobile = window.innerWidth < 768;
+      const isTablet = window.innerWidth >= 768 && window.innerWidth <= 1024;
+      
+      setIsPortraitMobile((isMobile || isTablet) && isPortrait);
+      setIsTabletPortrait(isTablet && isPortrait);
     }
   
     handleResize()
     window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
+    window.addEventListener("orientationchange", handleResize)
+    return () => {
+      window.removeEventListener("resize", handleResize)
+      window.removeEventListener("orientationchange", handleResize)
+    }
   }, [])
 
   const isDesktopLandscape = !isPortraitMobile;
@@ -103,20 +113,29 @@ export function FeatureSteps({
     setIsServicesOpen(!isServicesOpen);
   };
 
+  // Style pour tablette portrait
+  const tabletPortraitStyle = {
+    maxWidth: isTabletPortrait ? "calc(100% - 40px)" : "100%",
+    margin: "0 auto",
+    padding: isTabletPortrait ? "0 20px" : "0"
+  };
+
   return (
     <div className={cn("p-8 md:p-12 md:pb-20 lg:pb-28 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
-      <div className="w-full max-w-5xl mx-auto">
+      <div className="w-full max-w-5xl mx-auto" style={tabletPortraitStyle}>
         <ScrollAnimation animation="fade-up" duration={titleDuration} threshold={titleThreshold}>
           <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mx-auto ${isPortraitMobile ? 'mb-6' : 'mb-10'}`}>
             {title}
           </h2>
         </ScrollAnimation>
 
-        <div className={`flex flex-col lg:grid lg:grid-cols-2 ${isPortraitMobile ? 'gap-6' : 'gap-6'} lg:gap-10 items-start`}>
-          {isPortraitMobile ? (
-            <ScrollAnimation animation="fade-up" duration={0.6} threshold={0.1} className="w-full">
-              <div className="w-full flex justify-center mb-6">
-                <div className="w-full max-w-md border border-[#e0d7c8] rounded-md overflow-hidden">
+        {/* Vue pour mobile et tablette portrait */}
+        {isPortraitMobile ? (
+          <div className="flex flex-col items-center w-full">
+            {/* Accordéon de services */}
+            <ScrollAnimation animation="fade-up" duration={0.6} threshold={0.1} className="w-full mb-8">
+              <div className="w-full max-w-md mx-auto">
+                <div className="w-full border border-[#e0d7c8] rounded-md overflow-hidden">
                   <button 
                     className="w-full flex items-center justify-center gap-2 py-2 text-base font-medium hover:bg-[#f1ede5] transition-colors"
                     onClick={toggleServices}
@@ -152,7 +171,23 @@ export function FeatureSteps({
                 </div>
               </div>
             </ScrollAnimation>
-          ) : (
+
+            {/* Formulaire pour mobile et tablette portrait */}
+            <ScrollAnimation animation="fade-up" duration={0.6} threshold={0.1} className="w-full">
+              <div 
+                id="form"
+                className="w-full flex justify-center items-center"
+                style={{ scrollMarginTop: "120px" }}
+              >
+                <div className="w-full max-w-md mx-auto">
+                  <LoginForm className="w-full" />
+                </div>
+              </div>
+            </ScrollAnimation>
+          </div>
+        ) : (
+          // Vue pour desktop
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-10 items-start">
             <ScrollAnimation animation="fade-left" className="order-2 lg:order-1">
               <div className="space-y-8 w-full">
                 {features.map((feature, index) => (
@@ -184,22 +219,18 @@ export function FeatureSteps({
                 ))}
               </div>
             </ScrollAnimation>
-          )}
 
-          <ScrollAnimation animation="fade-right" duration={formDuration} delay={formDelay} threshold={formThreshold} className="order-1 lg:order-2 w-full">
-            <div
-              id="form"
-              className="w-full flex flex-col items-center justify-center"
-              style={{ 
-                scrollMarginTop: "120px"
-              }}
-            >
-              <TabletPortraitWrapper>
-                <LoginForm className="tablet-form" />
-              </TabletPortraitWrapper>
-            </div>
-          </ScrollAnimation>
-        </div>
+            <ScrollAnimation animation="fade-right" duration={formDuration} delay={formDelay} threshold={formThreshold} className="order-1 lg:order-2 w-full">
+              <div
+                id="form"
+                className="w-full flex flex-col items-center justify-center"
+                style={{ scrollMarginTop: "120px" }}
+              >
+                <LoginForm className="w-full max-w-md" />
+              </div>
+            </ScrollAnimation>
+          </div>
+        )}
       </div>
     </div>
   )
