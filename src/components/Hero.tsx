@@ -12,6 +12,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
+import { PhoneMenu } from "@/components/ui/phone-menu";
 
 export default function Hero() {
   const [isMobilePortrait, setIsMobilePortrait] = useState(false);
@@ -91,11 +92,7 @@ export default function Hero() {
           Mobilier d&apos;exception en bois noble façonné sur mesure pour sublimer votre intérieur.
         </p>
         <div ref={buttonRef}>
-          <Link href="tel:0496892531">
-            <Button size="lg" className="rounded-full bg-white text-black border border-white hover:bg-[#3E2F1C] hover:text-white hover:border-white cursor-pointer transition-colors duration-200">
-              Appeler
-            </Button>
-          </Link>
+          <PhoneMenu rounded={true} size="lg" className="bg-white text-black" />
         </div>
       </div>
     </section>

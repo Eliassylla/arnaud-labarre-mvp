@@ -13,6 +13,7 @@ import { Menu, MoveRight, X } from "lucide-react";
 import { useState } from "react";
 import { useScrollToSection } from "@/lib/useScrollToSection";
 import Link from "next/link";
+import { PhoneMenu } from "@/components/ui/phone-menu";
 
 function Header1() {
     const { scrollToSection } = useScrollToSection();
@@ -163,9 +164,7 @@ function Header1() {
                 </div>
                 <div className="flex justify-end w-full gap-4">
                     <div className="border-r hidden lg:inline"></div>
-                    <Link href="tel:0496892531">
-                        <Button variant="outline" className="cursor-pointer bg-white text-[#3E2F1C] hover:bg-[#3E2F1C] hover:text-white">Appeler</Button>
-                    </Link>
+                    <PhoneMenu variant="outline" />
                     <a href="#form" onClick={(e) => handleNavigation(e, '#form')}>
                         <Button className="cursor-pointer bg-[#3E2F1C] text-white hover:bg-[#2d2316]">Devis</Button>
                     </a>
