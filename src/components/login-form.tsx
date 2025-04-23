@@ -8,13 +8,33 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useEffect, useState } from "react"
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const [isTabletPortrait, setIsTabletPortrait] = useState(false);
+
+  useEffect(() => {
+    const checkTabletPortrait = () => {
+      const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+      const isTablet = window.innerWidth >= 768 && window.innerWidth <= 1024;
+      setIsTabletPortrait(isPortrait && isTablet);
+    };
+
+    checkTabletPortrait();
+    window.addEventListener('resize', checkTabletPortrait);
+    window.addEventListener('orientationchange', checkTabletPortrait);
+
+    return () => {
+      window.removeEventListener('resize', checkTabletPortrait);
+      window.removeEventListener('orientationchange', checkTabletPortrait);
+    };
+  }, []);
+
   return (
-  <div className={cn("w-full max-w-md mx-auto", className)} {...props}>
+  <div className={cn("w-full max-w-md mx-auto", isTabletPortrait ? "!mx-auto !max-w-[85%]" : "", className)} {...props}>
       <Card className="w-full bg-[#f3e5d0] border border-[#A55B53] shadow-lg p-2 sm:p-3 md:p-4 rounded-2xl">
         <CardHeader className="p-3 md:p-4">
           <CardTitle className="font-semibold text-[#3E2F1C] text-center">Demander votre devis gratuit</CardTitle>

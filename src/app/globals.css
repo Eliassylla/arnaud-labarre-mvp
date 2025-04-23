@@ -11,20 +11,16 @@ html {
 }
 
 /* Style spécifique pour le formulaire en vue portrait */
-.form-portrait .bg-\[\#f3e5d0\] {
+.form-portrait .bg-\[\#f3e5d0\], .tablet-form .bg-\[\#f3e5d0\] {
   border: 1px solid #A55B53 !important;
 }
 
 /* Ajustement spécifique pour tablette en mode portrait */
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-  .form-portrait {
-    max-width: 90% !important;
-    margin: 0 auto !important;
-  }
-  #form .w-full.flex.justify-center {
-    justify-content: center !important;
-    display: flex !important;
-    width: 100% !important;
+  .tablet-form, .form-portrait {
+    width: 85% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 }
 

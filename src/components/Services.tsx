@@ -192,7 +192,7 @@ export function FeatureSteps({
               style={{ scrollMarginTop: "120px" }}
             >
               <div className="w-full flex justify-center items-center">
-                <LoginForm className={isPortraitMobile ? "mx-auto form-portrait" : ""} />
+                <LoginForm className={isPortraitMobile ? "mx-auto tablet-form" : ""} />
               </div>
             </div>
           </ScrollAnimation>
