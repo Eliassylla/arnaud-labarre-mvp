@@ -104,18 +104,18 @@ export function FeatureSteps({
 
   return (
     <div className={cn("p-8 md:p-12 md:pb-20 lg:pb-28 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
-      <div className="w-full">
+      <div className="w-full max-w-5xl mx-auto">
         <ScrollAnimation animation="fade-up" duration={titleDuration} threshold={titleThreshold}>
-          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mx-auto ${isPortraitMobile ? 'mb-1' : 'mb-10'}`}>
+          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mx-auto ${isPortraitMobile ? 'mb-6' : 'mb-10'}`}>
             {title}
           </h2>
         </ScrollAnimation>
 
-        <div className={`flex flex-col lg:grid lg:grid-cols-2 ${isPortraitMobile ? 'gap-3' : 'gap-6'} lg:gap-10 items-start`}>
+        <div className={`flex flex-col lg:grid lg:grid-cols-2 ${isPortraitMobile ? 'gap-6' : 'gap-6'} lg:gap-10 items-start`}>
           {isPortraitMobile ? (
-            <ScrollAnimation animation="fade-up" duration={0.6} threshold={0.1}>
-              <div className="w-full flex justify-center mb-3">
-                <div className="w-full max-w-md border rounded-md overflow-hidden">
+            <ScrollAnimation animation="fade-up" duration={0.6} threshold={0.1} className="w-full">
+              <div className="w-full flex justify-center mb-6">
+                <div className="w-full max-w-md border border-[#e0d7c8] rounded-md overflow-hidden">
                   <button 
                     className="w-full flex items-center justify-center gap-2 py-2 text-base font-medium hover:bg-[#f1ede5] transition-colors"
                     onClick={toggleServices}
