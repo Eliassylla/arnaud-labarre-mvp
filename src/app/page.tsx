@@ -14,26 +14,26 @@ export default function Page() {
       <Header1 />
       <div className="bg-[#F8F5EF]">
         <main>
-          <section id="accueil" className="scroll-mt-20">
+          <section id="accueil">
             <Hero />
           </section>
-          <section id="a-propos" className="scroll-mt-20">
+          <section id="a-propos">
             <ClientExperience />
           </section>
-          <section id="services" className="scroll-mt-20">
+          <section id="services">
             <ServicesSectionExample />
           </section>
-          <section id="atouts" className="scroll-mt-10">
+          <section id="atouts">
             <ValueProps />
           </section>
-          <section id="realisations" className="scroll-mt-20">
+          <section id="realisations">
             <Feature />
           </section>
-          <section id="faq" className="scroll-mt-20">
+          <section id="faq">
             <FAQ />
           </section>
         </main>
-        <section id="contact" className="scroll-mt-0">
+        <section id="contact">
           <Footer />
         </section>
       </div>
