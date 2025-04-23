@@ -191,7 +191,7 @@ export function FeatureSteps({
               className={`w-full pt-6 ${isDesktopLandscape ? 'lg:pt-0' : 'lg:pt-8'}`}
               style={{ scrollMarginTop: "120px" }}
             >
-              <div className="w-full flex justify-center">
+              <div className="w-full flex justify-center items-center">
                 <LoginForm className={isPortraitMobile ? "mx-auto form-portrait" : ""} />
               </div>
             </div>
