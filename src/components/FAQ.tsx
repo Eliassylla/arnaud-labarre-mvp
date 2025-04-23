@@ -50,14 +50,6 @@ export default function FAQ() {
   const isDesktopLandscape = isMounted && !isMobileOrTablet;
   const isMobilePortrait = isMounted && isMobileOrTablet && isPortraitMode;
 
-  const titleDuration = isMobilePortrait ? 0.6 : 0.8;
-  const titleThreshold = isMobilePortrait ? 0.1 : 0.2;
-
-  const accordionDuration = isMobilePortrait ? 0.8 : 1;
-  const accordionThreshold = isMobilePortrait ? 0.1 : 0.2;
-  const accordionStagger = isMobilePortrait ? 0.1 : 0.15;
-  const accordionDelay = isMobilePortrait ? 0.1 : 0.2;
-
   if (!isMounted) {
     return (
       <div className="w-full bg-[#F8F5EF]">
