@@ -165,7 +165,7 @@ function Header1() {
                     <div className="border-r hidden lg:inline"></div>
                     <PhoneMenu variant="outline" buttonText="Appeler" />
                     <a href="#form" onClick={(e) => handleNavigation(e, '#form')}>
-                        <Button className="cursor-pointer bg-[#A55B53] text-white hover:bg-[#8a4a44]">Devis</Button>
+                        <Button className="cursor-pointer bg-[#f3e5d0] text-[#3E2F1C] hover:bg-[#ecddc8] border border-[#A55B53]">Devis</Button>
                     </a>
                 </div>
             </div>
