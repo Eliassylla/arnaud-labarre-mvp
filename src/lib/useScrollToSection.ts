@@ -18,9 +18,9 @@ export const useScrollToSection = () => {
       event.preventDefault();
     }
 
-    // Valeurs par défaut - encore plus réduites
+    // Valeurs par défaut - réduites au minimum
     const { 
-      offset = window.innerWidth <= 768 ? 120 : 100, // Offset encore plus réduit
+      offset = window.innerWidth <= 768 ? 80 : 60, // Offset minimal
       behavior = 'smooth' 
     } = options;
 
