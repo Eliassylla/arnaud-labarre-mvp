@@ -12,8 +12,25 @@ import {
 import { Menu, MoveRight, X } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import { useScrollToSection } from "@/lib/useScrollToSection";
 
 function Header1() {
+    const { scrollToSection } = useScrollToSection();
+    
+    const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        // Si c'est un lien d'ancrage (commence par #), utiliser notre fonction personnalisée
+        if (href.startsWith('#')) {
+            e.preventDefault();
+            scrollToSection(href);
+            
+            // Fermer le menu mobile si ouvert
+            if (isOpen) {
+                setOpen(false);
+            }
+        }
+        // Sinon, laisser le comportement de navigation normal pour les liens externes
+    };
+    
     const navigationItems = [
         {
             title: "Accueil",
@@ -72,12 +89,13 @@ function Header1() {
                                 <div key={item.title}>
                                     <div className="flex flex-col gap-2">
                                         {item.href ? (
-                                            <Link
+                                            <a 
                                                 href={item.href}
                                                 className="flex justify-between items-center cursor-pointer"
+                                                onClick={(e) => handleNavigation(e, item.href)}
                                             >
                                                 <span className="text-lg">{item.title}</span>
-                                            </Link>
+                                            </a>
                                         ) : (
                                             <p className="text-lg">{item.title}</p>
                                         )}
@@ -94,9 +112,12 @@ function Header1() {
                                 <NavigationMenuItem key={item.title}>
                                     {item.href ? (
                                         <>
-                                            <Link href={item.href}>
+                                            <a 
+                                                href={item.href}
+                                                onClick={(e) => handleNavigation(e, item.href)}
+                                            >
                                                 <Button variant="ghost" className="cursor-pointer">{item.title}</Button>
-                                            </Link>
+                                            </a>
                                         </>
                                     ) : (
                                         <>
@@ -143,9 +164,9 @@ function Header1() {
                 <div className="flex justify-end w-full gap-4">
                     <div className="border-r hidden lg:inline"></div>
                     <Button variant="outline" className="cursor-pointer bg-white text-[#3E2F1C] hover:bg-[#3E2F1C] hover:text-white">Appeler</Button>
-                    <Link href="#form">
+                    <a href="#form" onClick={(e) => handleNavigation(e, '#form')}>
                         <Button className="cursor-pointer bg-[#3E2F1C] text-white hover:bg-[#2d2316]">Devis</Button>
-                    </Link>
+                    </a>
                 </div>
             </div>
         </header>
