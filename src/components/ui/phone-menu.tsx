@@ -1,14 +1,9 @@
 'use client';
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Phone } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 interface PhoneNumber {
   number: string;
@@ -35,6 +30,8 @@ export function PhoneMenu({
   rounded = false,
   className = "",
 }: PhoneMenuProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
   // Classes conditionnelles pour le bouton
   const getButtonClass = () => {
     if (variant === "outline") {
@@ -45,26 +42,31 @@ export function PhoneMenu({
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button 
-          variant={variant === "outline" ? "outline" : "default"} 
-          size={size}
-          className={getButtonClass()}
-        >
-          {buttonText}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
-        {phoneNumbers.map((item) => (
-          <DropdownMenuItem key={item.number} className="cursor-pointer">
-            <Link href={`tel:${item.number}`} className="flex items-center w-full">
+    <div className="relative">
+      <Button 
+        variant={variant === "outline" ? "outline" : "default"} 
+        size={size}
+        className={getButtonClass()}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {buttonText}
+      </Button>
+
+      {isOpen && (
+        <div className="absolute top-full mt-2 right-0 bg-white rounded shadow-lg py-2 w-48 z-50">
+          {phoneNumbers.map((item) => (
+            <Link 
+              key={item.number} 
+              href={`tel:${item.number}`} 
+              className="flex items-center px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
+              onClick={() => setIsOpen(false)}
+            >
               <Phone className="mr-2 h-4 w-4" />
               <span>{item.label}: {item.number.replace(/(\d{2})(?=\d)/g, '$1 ')}</span>
             </Link>
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+          ))}
+        </div>
+      )}
+    </div>
   );
 } 
