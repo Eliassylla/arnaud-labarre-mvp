@@ -1,80 +1,83 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function ScrollToTop() {
-  // Référence pour vérifier si c'est le premier chargement
-  const isFirstRender = useRef(true);
+  // État pour contrôler la visibilité du contenu
+  const [isReady, setIsReady] = useState(false);
   
   useEffect(() => {
-    // Fonction pour défiler vers le haut immédiatement
-    const forceScrollTop = () => {
-      // Essayons plusieurs méthodes pour s'assurer que ça fonctionne partout
-      window.scrollTo(0, 0);
-      
-      // Pour les navigateurs mobiles récalcitrants
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-      
-      // Pour les situations où le scroll ne fonctionne pas immédiatement
-      setTimeout(() => {
+    // Fonction pour s'assurer que la page est au sommet
+    const resetViewport = () => {
+      if (typeof window !== 'undefined') {
+        // Masquer le défilement avec un style global temporaire
+        const style = document.createElement('style');
+        style.innerHTML = `
+          html, body {
+            overflow: hidden !important;
+            height: 100vh !important;
+            scroll-behavior: auto !important;
+          }
+          body {
+            opacity: 0;
+            transition: opacity 0.1s;
+          }
+        `;
+        document.head.appendChild(style);
+        
+        // Reset immédiat de la position de défilement
         window.scrollTo(0, 0);
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
-      }, 50);
-    };
-
-    // Cette partie s'exécute une seule fois au chargement initial
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      
-      // Retirer tout fragment d'URL (#) si présent
-      if (window.location.hash) {
-        window.history.replaceState(
-          null, 
-          document.title, 
-          window.location.pathname + window.location.search
-        );
-      }
-
-      // Forcer le défilement vers le haut
-      forceScrollTop();
-      
-      // Pour être vraiment certain sur les appareils mobiles récalcitrants
-      const intervalId = setInterval(() => {
-        if (window.scrollY > 0) {
-          forceScrollTop();
-        } else {
-          clearInterval(intervalId);
+        
+        // Supprimer tout fragment (#) de l'URL
+        if (window.location.hash) {
+          window.history.replaceState(
+            null, 
+            document.title, 
+            window.location.pathname + window.location.search
+          );
         }
-      }, 100);
-      
-      // Nettoyer l'intervalle après 1 seconde maximum
-      setTimeout(() => clearInterval(intervalId), 1000);
-    }
-  }, []);
-
-  // Hook spécifique pour gérer les rechargements de page
-  useEffect(() => {
-    // Gestionnaire d'événement pour le défilement
-    const handleBeforeUnload = () => {
-      // Stocke une marque dans sessionStorage pour identifier un rechargement
-      sessionStorage.setItem('page_reloaded', 'true');
+        
+        // Petit délai pour s'assurer que tout est prêt
+        setTimeout(() => {
+          // Modifier le style pour révéler le contenu
+          document.body.style.opacity = '1';
+          // Supprimer le style temporaire après la transition
+          setTimeout(() => {
+            if (document.head.contains(style)) {
+              document.head.removeChild(style);
+            }
+          }, 150);
+          // Marquer la page comme prête
+          setIsReady(true);
+        }, 100);
+      }
     };
 
-    // Vérifier si la page a été rechargée et défiler vers le haut si c'est le cas
-    if (typeof window !== 'undefined') {
-      if (sessionStorage.getItem('page_reloaded') === 'true') {
-        window.scrollTo(0, 0);
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-        sessionStorage.removeItem('page_reloaded');
-      }
+    // Vérifier si c'est un rechargement de page
+    const isPageLoad = typeof window !== 'undefined';
+    const isReload = isPageLoad && (
+      window.performance?.navigation?.type === 1 || 
+      sessionStorage.getItem('page_reloaded') === 'true'
+    );
       
-      // Ajouter l'écouteur d'événement
+    // Si c'est un rechargement, appliquer notre stratégie
+    if (isReload) {
+      resetViewport();
+      sessionStorage.removeItem('page_reloaded');
+    } else {
+      // Sinon, juste marquer comme prêt
+      setIsReady(true);
+    }
+    
+    // Ajouter un gestionnaire pour les futurs rechargements
+    if (isPageLoad) {
+      const handleBeforeUnload = () => {
+        sessionStorage.setItem('page_reloaded', 'true');
+      };
+      
       window.addEventListener('beforeunload', handleBeforeUnload);
-      
-      // Nettoyer
       return () => {
         window.removeEventListener('beforeunload', handleBeforeUnload);
       };
