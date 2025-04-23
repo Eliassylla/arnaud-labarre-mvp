@@ -96,11 +96,25 @@ export function FeatureSteps({
   return (
     <div className={cn("p-8 md:p-12 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
       <div className="w-full">
-        <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mx-auto ${isPortraitMobile ? 'mb-1' : 'mb-6'}`}>{title}</h2>
+        <motion.h2 
+          className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mx-auto ${isPortraitMobile ? 'mb-1' : 'mb-6'}`}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          {title}
+        </motion.h2>
 
         <div className={`flex flex-col md:grid md:grid-cols-2 ${isPortraitMobile ? 'gap-3' : 'gap-6'} md:gap-10 items-start`}>
           {isPortraitMobile ? (
-            <div className="w-full flex justify-center">
+            <motion.div 
+              className="w-full flex justify-center"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7 }}
+            >
               <div className="w-full flex justify-center mb-3">
                 <div className="w-full max-w-md border rounded-md overflow-hidden">
                   <button 
@@ -137,9 +151,15 @@ export function FeatureSteps({
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ) : (
-            <div className="order-2 md:order-1 space-y-8 w-full">
+            <motion.div 
+              className="order-2 md:order-1 space-y-8 w-full"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8 }}
+            >
               {features.map((feature, index) => (
                 <motion.div
                   key={index}
@@ -169,14 +189,22 @@ export function FeatureSteps({
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
 
-          <div id="form" className="order-1 md:order-2 w-full pt-6 md:pt-8" style={{ scrollMarginTop: "120px" }}>
+          <motion.div 
+            id="form" 
+            className="order-1 md:order-2 w-full pt-6 md:pt-8" 
+            style={{ scrollMarginTop: "120px" }}
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          >
             <div className="w-full flex justify-center">
               <LoginForm />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
