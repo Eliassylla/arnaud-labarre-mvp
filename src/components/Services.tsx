@@ -6,6 +6,7 @@ import { LoginForm } from "@/components/login-form"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 import { ChevronDown } from "lucide-react"
 import ScrollAnimation from '@/components/ui/scroll-animation'
+import TabletPortraitWrapper from '@/components/ui/tablet-portrait-wrapper'
 
 interface Feature {
   step: string
@@ -185,15 +186,17 @@ export function FeatureSteps({
             </ScrollAnimation>
           )}
 
-          <ScrollAnimation animation="fade-right" duration={formDuration} delay={formDelay} threshold={formThreshold} className="order-1 lg:order-2">
+          <ScrollAnimation animation="fade-right" duration={formDuration} delay={formDelay} threshold={formThreshold} className="order-1 lg:order-2 w-full">
             <div
               id="form"
-              className={`w-full pt-6 ${isDesktopLandscape ? 'lg:pt-0' : 'lg:pt-8'}`}
-              style={{ scrollMarginTop: "120px" }}
+              className="w-full flex flex-col items-center justify-center"
+              style={{ 
+                scrollMarginTop: "120px"
+              }}
             >
-              <div className="w-full flex justify-center items-center">
-                <LoginForm className={isPortraitMobile ? "mx-auto tablet-form" : ""} />
-              </div>
+              <TabletPortraitWrapper>
+                <LoginForm className="tablet-form" />
+              </TabletPortraitWrapper>
             </div>
           </ScrollAnimation>
         </div>
