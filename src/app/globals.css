@@ -2,12 +2,12 @@
 @import "tw-animate-css";
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 280px;
+  scroll-padding-top: 120px;
 }
 
 /* Styles spécifiques pour l'élément form */
 #form {
-  scroll-margin-top: 280px;
+  scroll-margin-top: 120px;
 }
 
 /* Ajustements spécifiques pour chaque section */
@@ -16,17 +16,17 @@ html {
 }
 
 #a-propos, #services, #atouts, #realisations, #faq, #contact {
-  scroll-margin-top: 280px;
+  scroll-margin-top: 120px;
 }
 
 /* Ajustements responsifs */
 @media (max-width: 768px) {
   html {
-    scroll-padding-top: 300px;
+    scroll-padding-top: 140px;
   }
   
   #form, #a-propos, #services, #atouts, #realisations, #faq, #contact {
-    scroll-margin-top: 300px;
+    scroll-margin-top: 140px;
   }
 }
 
