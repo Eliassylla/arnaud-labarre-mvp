@@ -10,6 +10,11 @@ html {
   scroll-margin-top: 60px;
 }
 
+/* Style spécifique pour le formulaire en vue portrait */
+.form-portrait .bg-\[\#f3e5d0\] {
+  border: 1px solid #A55B53 !important;
+}
+
 /* Ajustements spécifiques pour chaque section */
 #accueil {
   scroll-margin-top: 0;
