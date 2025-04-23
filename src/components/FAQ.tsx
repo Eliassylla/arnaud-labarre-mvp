@@ -28,7 +28,6 @@ export default function FAQ() {
   ]
 
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
-  const [isPortraitMode, setIsPortraitMode] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   
   useEffect(() => {
@@ -36,10 +35,7 @@ export default function FAQ() {
     
     const handleResize = () => {
       const isSmallScreen = window.innerWidth < 1024;
-      const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-      
       setIsMobileOrTablet(isSmallScreen);
-      setIsPortraitMode(isPortrait);
     };
     
     handleResize();
