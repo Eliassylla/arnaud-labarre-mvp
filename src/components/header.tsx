@@ -163,7 +163,7 @@ function Header1() {
                 </div>
                 <div className="flex justify-end w-full gap-4">
                     <div className="border-r hidden lg:inline"></div>
-                    <PhoneMenu variant="outline" />
+                    <PhoneMenu variant="outline" buttonText="Appeler" />
                     <a href="#form" onClick={(e) => handleNavigation(e, '#form')}>
                         <Button className="cursor-pointer bg-[#3E2F1C] text-white hover:bg-[#2d2316]">Devis</Button>
                     </a>
