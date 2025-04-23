@@ -1,6 +1,7 @@
 'use client'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 import ScrollAnimation from '@/components/ui/scroll-animation'
+import { useState, useEffect } from "react";
 
 export default function FAQ() {
   const faqs = [
@@ -26,16 +27,50 @@ export default function FAQ() {
     }
   ]
 
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  const [isPortraitMode, setIsPortraitMode] = useState(false);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      const isSmallScreen = window.innerWidth < 1024;
+      const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+      
+      setIsMobileOrTablet(isSmallScreen);
+      setIsPortraitMode(isPortrait);
+    };
+    
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  
+  const isDesktopLandscape = !isMobileOrTablet;
+  const isMobilePortrait = isMobileOrTablet && isPortraitMode;
+
+  const titleDuration = isMobilePortrait ? 0.6 : 0.8;
+  const titleThreshold = isMobilePortrait ? 0.1 : 0.2;
+
+  const accordionDuration = isMobilePortrait ? 0.8 : 1;
+  const accordionThreshold = isMobilePortrait ? 0.1 : 0.2;
+  const accordionStagger = isMobilePortrait ? 0.1 : 0.15;
+  const accordionDelay = isMobilePortrait ? 0.1 : 0.2;
+
   return (
     <div className="w-full bg-[#F8F5EF]">
       <div className="container mx-auto py-20 px-4 text-[#3E2F1C]">
-        <ScrollAnimation animation="fade-up" duration={0.7}>
+        <ScrollAnimation animation="fade-up" duration={titleDuration} threshold={titleThreshold}>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center">
             FAQ
           </h2>
         </ScrollAnimation>
         
-        <ScrollAnimation animation="fade-up" delay={0.2} stagger={0.1}>
+        <ScrollAnimation 
+          animation="fade-up" 
+          delay={accordionDelay} 
+          duration={accordionDuration} 
+          threshold={accordionThreshold} 
+          stagger={accordionStagger}
+        >
           <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((faq, idx) => (
               <AccordionItem key={idx} value={`faq-${idx}`}>
