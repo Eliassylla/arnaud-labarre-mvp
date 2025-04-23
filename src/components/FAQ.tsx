@@ -44,7 +44,6 @@ export default function FAQ() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   
-  const isDesktopLandscape = !isMobileOrTablet;
   const isMobilePortrait = isMobileOrTablet && isPortraitMode;
 
   const titleDuration = isMobilePortrait ? 0.6 : 0.8;
