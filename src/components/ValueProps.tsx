@@ -15,27 +15,41 @@ export default function ValueProps() {
           </h2>
         </ScrollAnimation>
         
-        <ScrollAnimation className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-12" stagger={0.15}>
-          <div className="flex flex-col items-center text-center bg-[#f3e5d0] dark:bg-[#5B270B] border border-[#A55B53] dark:border-[#3F1F14] rounded-2xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transform transition">
-            <Hammer className="size-8 text-[#A55B53] mb-3" />
-            <h3 className="text-lg font-semibold mb-2 text-[#3E2F1C]">Savoir‑faire traditionnel</h3>
-            <p className="text-sm text-[#3E2F1C]">
-              Techniques artisanales transmises depuis des générations.
-            </p>
+        <ScrollAnimation className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" stagger={0.15}>
+          <div className="flex flex-col items-center text-center bg-[#f3e5d0] dark:bg-[#5B270B] border border-[#A55B53] dark:border-[#3F1F14] rounded-2xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transform transition h-full">
+            <div className="flex flex-col items-center justify-between h-full">
+              <div>
+                <Hammer className="size-8 text-[#A55B53] mb-3" />
+                <h3 className="text-lg font-semibold mb-2 text-[#3E2F1C]">Savoir‑faire traditionnel</h3>
+              </div>
+              <p className="text-sm text-[#3E2F1C] mt-auto">
+                Techniques artisanales transmises depuis des générations.
+              </p>
+            </div>
           </div>
-          <div className="flex flex-col items-center text-center bg-[#f3e5d0] dark:bg-[#5B270B] border border-[#A55B53] dark:border-[#3F1F14] rounded-2xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transform transition">
-            <TreeDeciduous className="size-8 text-[#A55B53] mb-3" />
-            <h3 className="text-lg font-semibold mb-2 text-[#3E2F1C]">Matériaux nobles</h3>
-            <p className="text-sm text-[#3E2F1C]">
-              Bois sélectionné pour sa durabilité et son esthétique.
-            </p>
+          
+          <div className="flex flex-col items-center text-center bg-[#f3e5d0] dark:bg-[#5B270B] border border-[#A55B53] dark:border-[#3F1F14] rounded-2xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transform transition h-full">
+            <div className="flex flex-col items-center justify-between h-full">
+              <div>
+                <TreeDeciduous className="size-8 text-[#A55B53] mb-3" />
+                <h3 className="text-lg font-semibold mb-2 text-[#3E2F1C]">Matériaux nobles</h3>
+              </div>
+              <p className="text-sm text-[#3E2F1C] mt-auto">
+                Bois sélectionné pour sa durabilité et son esthétique.
+              </p>
+            </div>
           </div>
-          <div className="flex flex-col items-center text-center bg-[#f3e5d0] dark:bg-[#5B270B] border border-[#A55B53] dark:border-[#3F1F14] rounded-2xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transform transition">
-            <Edit3 className="size-8 text-[#A55B53] mb-3" />
-            <h3 className="text-lg font-semibold mb-2 text-[#3E2F1C]">Design personnalisé</h3>
-            <p className="text-sm text-[#3E2F1C]">
-              Créations sur mesure pour s&apos;intégrer parfaitement à votre intérieur.
-            </p>
+          
+          <div className="flex flex-col items-center text-center bg-[#f3e5d0] dark:bg-[#5B270B] border border-[#A55B53] dark:border-[#3F1F14] rounded-2xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transform transition h-full">
+            <div className="flex flex-col items-center justify-between h-full">
+              <div>
+                <Edit3 className="size-8 text-[#A55B53] mb-3" />
+                <h3 className="text-lg font-semibold mb-2 text-[#3E2F1C]">Design personnalisé</h3>
+              </div>
+              <p className="text-sm text-[#3E2F1C] mt-auto">
+                Créations sur mesure pour s&apos;intégrer parfaitement à votre intérieur.
+              </p>
+            </div>
           </div>
         </ScrollAnimation>
         
