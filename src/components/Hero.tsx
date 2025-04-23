@@ -8,8 +8,6 @@ const charm = Charm({
 });
 
 import Image from 'next/image'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { PhoneMenu } from "@/components/ui/phone-menu";

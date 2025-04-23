@@ -12,7 +12,6 @@ import {
 import { Menu, MoveRight, X } from "lucide-react";
 import { useState } from "react";
 import { useScrollToSection } from "@/lib/useScrollToSection";
-import Link from "next/link";
 import { PhoneMenu } from "@/components/ui/phone-menu";
 
 function Header1() {
