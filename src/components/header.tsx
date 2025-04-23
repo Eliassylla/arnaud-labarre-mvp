@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Menu, MoveRight, X } from "lucide-react";
 import { useState } from "react";
-import Link from "next/link";
 import { useScrollToSection } from "@/lib/useScrollToSection";
 
 function Header1() {
