@@ -121,7 +121,7 @@ export function FeatureSteps({
                     className="w-full flex items-center justify-center gap-2 py-2 text-base font-medium hover:bg-[#f1ede5] transition-colors"
                     onClick={toggleServices}
                   >
-                    <span className="inline-flex items-center justify-center text-center">
+                    <span className="inline-flex items-center justify-center text-center w-full">
                       Voir tous les services
                       <ChevronDown 
                         className={`h-4 w-4 ml-2 transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`}

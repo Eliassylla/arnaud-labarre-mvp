@@ -49,7 +49,7 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          Mobilier d'exception en bois noble  façonné sur mesure pour sublimer votre intérieur.
+          Mobilier d&apos;exception en bois noble façonné sur mesure pour sublimer votre intérieur.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

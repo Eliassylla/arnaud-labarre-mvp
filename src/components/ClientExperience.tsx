@@ -1,17 +1,19 @@
 'use client'
 import Image from 'next/image';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 // import { Check } from 'lucide-react';
 import { Avatar } from '@/components/ui/avatar';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import { Autoplay } from 'swiper/modules';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 
 export default function ClientExperience() {
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const [isPortraitMode, setIsPortraitMode] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
   
   useEffect(() => {
     const handleResize = () => {
@@ -28,14 +30,13 @@ export default function ClientExperience() {
   }, []);
   
   return (
-    <section className="w-full py-8 bg-[#F9F6F1] overflow-visible">
+    <section ref={ref} className="w-full py-8 bg-[#F9F6F1] overflow-visible">
       <div className="container mx-auto px-4 md:px-6 flex flex-col items-center">
         {/* Titre "À propos" centré pour toutes les versions */}
         <motion.h2 
           className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 lg:mb-12 text-center text-[#3E2F1C]"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
         >
           À propos
@@ -46,8 +47,7 @@ export default function ClientExperience() {
           <motion.div 
             className="order-1 lg:order-2 text-center lg:text-left w-full max-w-md mx-auto px-4 md:px-6 lg:px-10 lg:max-w-xl"
             initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-[#3E2F1C] text-center lg:text-left pt-2 lg:leading-tight">
@@ -65,8 +65,7 @@ export default function ClientExperience() {
           <motion.div 
             className="order-2 lg:order-1 flex justify-center w-full mt-4 lg:mt-0"
             initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8 }}
           >
             <Avatar className="relative w-80 h-80 md:w-[22rem] md:h-[22rem] lg:w-[26rem] lg:h-[26rem] overflow-hidden">

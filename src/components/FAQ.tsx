@@ -1,8 +1,12 @@
 'use client'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
 
 export default function FAQ() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  
   const faqs = [
     {
       question: "Quels types de meubles proposez-vous ?",
@@ -42,13 +46,12 @@ export default function FAQ() {
   };
 
   return (
-    <div className="w-full bg-[#F8F5EF]">
+    <div ref={ref} className="w-full bg-[#F8F5EF]">
       <div className="container mx-auto py-20 px-4 text-[#3E2F1C]">
         <motion.h2 
           className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
         >
           FAQ
@@ -56,8 +59,7 @@ export default function FAQ() {
         <motion.div
           variants={container}
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
+          animate={isInView ? "show" : "hidden"}
         >
           <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((faq, idx) => (
