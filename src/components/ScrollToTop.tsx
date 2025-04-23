@@ -1,13 +1,21 @@
 'use client';
 
-import { useEffect } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function ScrollToTop() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // Attendre que le composant soit monté côté client
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    // Ne s'exécute que côté client après le montage
+    if (!mounted) return;
+
     // Fonction pour remonter en haut de page
     const scrollToTop = () => {
       window.scrollTo({
@@ -17,7 +25,7 @@ export default function ScrollToTop() {
     };
 
     // S'exécute quand la page est chargée
-    if (window.performance && (
+    if (typeof window !== 'undefined' && window.performance && (
       window.performance.navigation.type === 1 || // Type 1 est un rechargement (F5)
       document.referrer.includes(window.location.host) // ou si on vient du même domaine
     )) {
@@ -32,7 +40,7 @@ export default function ScrollToTop() {
 
     // Surveiller également les changements de route Next.js
     scrollToTop();
-  }, [pathname, searchParams]);
+  }, [pathname, mounted]);
 
   // Ce composant ne rend rien visuellement
   return null;
