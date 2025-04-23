@@ -1,11 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export default function ScrollToTop() {
-  // État pour contrôler la visibilité du contenu
-  const [isReady, setIsReady] = useState(false);
-  
   useEffect(() => {
     // Fonction pour s'assurer que la page est au sommet
     const resetViewport = () => {
@@ -49,8 +46,6 @@ export default function ScrollToTop() {
               document.head.removeChild(style);
             }
           }, 150);
-          // Marquer la page comme prête
-          setIsReady(true);
         }, 100);
       }
     };
@@ -66,9 +61,6 @@ export default function ScrollToTop() {
     if (isReload) {
       resetViewport();
       sessionStorage.removeItem('page_reloaded');
-    } else {
-      // Sinon, juste marquer comme prêt
-      setIsReady(true);
     }
     
     // Ajouter un gestionnaire pour les futurs rechargements
