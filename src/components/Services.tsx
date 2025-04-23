@@ -68,7 +68,7 @@ export function FeatureSteps({
   
   useEffect(() => {
     const handleResize = () => {
-      setIsPortraitMobile(window.innerWidth < 768 && window.matchMedia("(orientation: portrait)").matches)
+      setIsPortraitMobile(window.innerWidth <= 1024 && window.matchMedia("(orientation: portrait)").matches)
     }
   
     handleResize()
@@ -111,7 +111,7 @@ export function FeatureSteps({
           </h2>
         </ScrollAnimation>
 
-        <div className={`flex flex-col md:grid md:grid-cols-2 ${isPortraitMobile ? 'gap-3' : 'gap-6'} md:gap-10 items-start`}>
+        <div className={`flex flex-col lg:grid lg:grid-cols-2 ${isPortraitMobile ? 'gap-3' : 'gap-6'} lg:gap-10 items-start`}>
           {isPortraitMobile ? (
             <ScrollAnimation animation="fade-up" duration={0.6} threshold={0.1}>
               <div className="w-full flex justify-center mb-3">
@@ -152,7 +152,7 @@ export function FeatureSteps({
               </div>
             </ScrollAnimation>
           ) : (
-            <ScrollAnimation animation="fade-left" className="order-2 md:order-1">
+            <ScrollAnimation animation="fade-left" className="order-2 lg:order-1">
               <div className="space-y-8 w-full">
                 {features.map((feature, index) => (
                   <div
@@ -185,10 +185,10 @@ export function FeatureSteps({
             </ScrollAnimation>
           )}
 
-          <ScrollAnimation animation="fade-right" duration={formDuration} delay={formDelay} threshold={formThreshold} className="order-1 md:order-2">
+          <ScrollAnimation animation="fade-right" duration={formDuration} delay={formDelay} threshold={formThreshold} className="order-1 lg:order-2">
             <div
               id="form"
-              className={`w-full pt-6 ${isDesktopLandscape ? 'md:pt-0' : 'md:pt-8'}`}
+              className={`w-full pt-6 ${isDesktopLandscape ? 'lg:pt-0' : 'lg:pt-8'}`}
               style={{ scrollMarginTop: "120px" }}
             >
               <div className="w-full flex justify-center">
