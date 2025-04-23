@@ -18,9 +18,9 @@ export const useScrollToSection = () => {
       event.preventDefault();
     }
 
-    // Valeurs par défaut
+    // Valeurs par défaut - augmentées pour assurer un meilleur positionnement
     const { 
-      offset = window.innerWidth <= 768 ? 240 : 220, // Offset selon la taille d'écran (mobile: 240px, desktop: 220px)
+      offset = window.innerWidth <= 768 ? 300 : 280, // Offset augmenté (+60px)
       behavior = 'smooth' 
     } = options;
 
