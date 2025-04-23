@@ -17,12 +17,8 @@ function Feature() {
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const [isPortraitMode, setIsPortraitMode] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   
   useEffect(() => {
-    // Indiquer que le composant est monté côté client
-    setIsMounted(true);
-    
     const handleResize = () => {
       const isSmallScreen = window.innerWidth < 1024;
       const isPortrait = window.matchMedia("(orientation: portrait)").matches;
@@ -36,8 +32,7 @@ function Feature() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   
-  // N'utiliser les détections d'appareil qu'après le montage du composant
-  const isDesktopLandscape = isMounted && !isMobileOrTablet;
+  const isDesktopLandscape = !isMobileOrTablet;
   
   const toggleDescription = () => {
     setIsDescriptionOpen(!isDescriptionOpen);
@@ -49,37 +44,6 @@ function Feature() {
     '/images/real3.webp',
     '/images/real4.webp',
   ];
-
-  // Version de base pendant l'hydratation
-  if (!isMounted) {
-    return (
-      <div className="w-full pt-4 lg:pt-8 pb-8 lg:pb-16 bg-[#F8F5EF]">
-        <div className="container px-4 md:px-6 mx-auto">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#3E2F1C] dark:text-[#F8F5EF] mb-8 text-center mx-auto">
-            Nos réalisations
-          </h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10">
-            <div className="flex gap-4 flex-col items-center lg:items-start justify-center h-full">
-              <div className="flex gap-2 flex-col w-full">
-                <h3 className="text-xl md:text-3xl lg:text-5xl tracking-tighter lg:max-w-xl font-regular text-center lg:text-left">
-                  Donnez vie à votre intérieur avec un mobilier sur mesure
-                </h3>
-                <p className="text-sm md:text-base lg:text-lg max-w-xl lg:max-w-sm leading-relaxed tracking-tight text-left text-neutral-700 dark:text-neutral-300">
-                  Depuis 20 ans, Arnaud Labarre conçoit des meubles d&apos;exception en bois noble, alliant savoir-faire traditionnel et design moderne pour sublimer votre espace.
-                </p>
-              </div>
-            </div>
-            <div className="w-full">
-              <div className="relative overflow-hidden rounded-md aspect-video bg-gray-100">
-                {/* Placeholder pour les images */}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
   <div className="w-full pt-4 lg:pt-8 pb-8 lg:pb-16 bg-[#F8F5EF]">

@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef, ReactNode } from 'react';
+import { useEffect, useRef, ReactNode, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type { CSSProperties } from 'react';
 
 // S'assurer que GSAP peut utiliser ScrollTrigger
 if (typeof window !== 'undefined') {
@@ -32,10 +33,24 @@ export default function ScrollAnimation({
 }: ScrollAnimationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const childrenRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Assurer que le composant est monté avant d'initialiser les animations
+  useEffect(() => {
+    setIsMounted(true);
+    return () => setIsMounted(false);
+  }, []);
 
   useEffect(() => {
-    // Ne rien faire côté serveur
-    if (typeof window === 'undefined') return;
+    // Ne rien faire côté serveur ou si le composant n'est pas monté
+    if (typeof window === 'undefined' || !isMounted) return;
+
+    // Nettoyer les anciens triggers avant d'en créer de nouveaux
+    ScrollTrigger.getAll().forEach(trigger => {
+      if (trigger.vars.trigger === containerRef.current) {
+        trigger.kill();
+      }
+    });
 
     // Configuration de l'animation basée sur le type choisi
     let animationConfig: gsap.TweenVars = { 
@@ -71,59 +86,76 @@ export default function ScrollAnimation({
       childrenRef.current.children : 
       containerRef.current;
     
-    if (!target) return;
+    if (!target || !containerRef.current) return;
 
+    // S'assurer que le conteneur est visible avant d'animer
+    gsap.set(containerRef.current, { visibility: 'visible' });
+    
     // Préparer l'animation
     gsap.set(target, animationConfig);
 
-    // Créer l'animation
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: `top ${100 - threshold * 100}%`,
-        toggleActions: once ? 'play none none none' : 'play reverse play reverse',
-        // markers: true, // Décommenter pour déboguer
-      },
-    });
-
-    // Animer vers les valeurs par défaut
-    const resetValues: gsap.TweenVars = {
-      opacity: 1,
-      autoAlpha: 1,
-      x: 0,
-      y: 0,
-      scale: 1,
-      duration,
-      delay,
-      ease: 'power2.out',
-    };
-
-    // Ajouter l'animation au timeline
-    if (stagger > 0 && childrenRef.current) {
-      tl.to(childrenRef.current.children, {
-        ...resetValues,
-        stagger,
+    // Pause courte pour s'assurer que le DOM est prêt
+    setTimeout(() => {
+      // Créer l'animation
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: `top ${100 - threshold * 100}%`,
+          toggleActions: once ? 'play none none none' : 'play reverse play reverse',
+          markers: false, // Mettre à true pour déboguer
+          id: `scroll-animation-${Date.now()}`, // ID unique pour éviter les conflits
+        },
       });
-    } else {
-      tl.to(target, resetValues);
-    }
 
-    // Nettoyer
+      // Animer vers les valeurs par défaut
+      const resetValues: gsap.TweenVars = {
+        opacity: 1,
+        autoAlpha: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        duration,
+        delay,
+        ease: 'power2.out',
+      };
+
+      // Ajouter l'animation au timeline
+      if (stagger > 0 && childrenRef.current && childrenRef.current.children.length > 0) {
+        tl.to(childrenRef.current.children, {
+          ...resetValues,
+          stagger,
+        });
+      } else {
+        tl.to(target, resetValues);
+      }
+    }, 100);
+
+    // Nettoyer lors du démontage
     return () => {
-      tl.kill();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach(trigger => {
+        if (trigger.vars.trigger === containerRef.current) {
+          trigger.kill();
+        }
+      });
     };
-  }, [animation, duration, delay, threshold, stagger, once]);
+  }, [animation, duration, delay, threshold, stagger, once, isMounted]);
+
+  // Appliquer des styles initiaux pour éviter le flash de contenu
+  const initialStyle: CSSProperties = {
+    visibility: isMounted ? 'visible' : 'hidden',
+  };
 
   return (
-    <div ref={containerRef} className={className}>
+    <div ref={containerRef} style={initialStyle}>
       {stagger > 0 ? (
-        <div ref={childrenRef} className="w-full">
+        <div ref={childrenRef} className={className}>
           {children}
         </div>
       ) : (
-        children
+        <div className={className}>
+          {children}
+        </div>
       )}
     </div>
   );
-} 
+}

@@ -76,6 +76,8 @@ export function FeatureSteps({
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
+  const isDesktopLandscape = !isPortraitMobile;
+
   useEffect(() => {
     const timer = setInterval(() => {
       if (progress < 100) {
@@ -89,6 +91,13 @@ export function FeatureSteps({
     return () => clearInterval(timer)
   }, [progress, features.length, autoPlayInterval])
 
+  const titleDuration = isPortraitMobile ? 0.6 : 0.8;
+  const titleThreshold = isPortraitMobile ? 0.1 : 0.2;
+
+  const formDuration = isPortraitMobile ? 0.6 : 0.8;
+  const formThreshold = isPortraitMobile ? 0.1 : 0.2;
+  const formDelay = isPortraitMobile ? 0 : 0.2;
+
   const toggleServices = () => {
     setIsServicesOpen(!isServicesOpen);
   };
@@ -96,15 +105,15 @@ export function FeatureSteps({
   return (
     <div className={cn("p-8 md:p-12 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
       <div className="w-full">
-        <ScrollAnimation animation="fade-up" duration={0.7}>
-          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mx-auto ${isPortraitMobile ? 'mb-1' : 'mb-6'}`}>
+        <ScrollAnimation animation="fade-up" duration={titleDuration} threshold={titleThreshold}>
+          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mx-auto ${isPortraitMobile ? 'mb-1' : 'mb-10'}`}>
             {title}
           </h2>
         </ScrollAnimation>
 
         <div className={`flex flex-col md:grid md:grid-cols-2 ${isPortraitMobile ? 'gap-3' : 'gap-6'} md:gap-10 items-start`}>
           {isPortraitMobile ? (
-            <ScrollAnimation animation="fade-up">
+            <ScrollAnimation animation="fade-up" duration={0.6} threshold={0.1}>
               <div className="w-full flex justify-center mb-3">
                 <div className="w-full max-w-md border rounded-md overflow-hidden">
                   <button 
@@ -176,8 +185,12 @@ export function FeatureSteps({
             </ScrollAnimation>
           )}
 
-          <ScrollAnimation animation="fade-right" delay={0.2} className="order-1 md:order-2">
-            <div id="form" className="w-full pt-6 md:pt-8" style={{ scrollMarginTop: "120px" }}>
+          <ScrollAnimation animation="fade-right" duration={formDuration} delay={formDelay} threshold={formThreshold} className="order-1 md:order-2">
+            <div
+              id="form"
+              className={`w-full pt-6 ${isDesktopLandscape ? 'md:pt-0' : 'md:pt-8'}`}
+              style={{ scrollMarginTop: "120px" }}
+            >
               <div className="w-full flex justify-center">
                 <LoginForm />
               </div>
@@ -188,3 +201,4 @@ export function FeatureSteps({
     </div>
   )
 }
+

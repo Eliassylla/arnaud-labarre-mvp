@@ -10,15 +10,34 @@ const charm = Charm({
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
 export default function Hero() {
+  const [isMobilePortrait, setIsMobilePortrait] = useState(false);
+
+  useEffect(() => {
+    function update() {
+      const isSmall = window.innerWidth < 768;
+      const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+      setIsMobilePortrait(isSmall && isPortrait);
+    }
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const overlayDur = isMobilePortrait ? 0.6 : 1.2;
+  const titleDur   = isMobilePortrait ? 0.8 : 1;
+  const textDur    = isMobilePortrait ? 0.8 : 1;
+  const buttonDur  = isMobilePortrait ? 0.6 : 1;
+  const yShift     = isMobilePortrait ? 10 : 20;
+
   const overlayRef = useRef(null);
   const titleRef = useRef(null);
   const textRef = useRef(null);
   const buttonRef = useRef(null);
-  
+
   useEffect(() => {
     // Ne rien faire côté serveur
     if (typeof window === 'undefined') return;
@@ -29,13 +48,13 @@ export default function Hero() {
     gsap.set(textRef.current, { opacity: 0 });
     gsap.set(buttonRef.current, { opacity: 0, y: 20 });
     
-    // Animation séquentielle
-    const tl = gsap.timeline({ defaults: { ease: "power2.out" }});
-    
-    tl.to(overlayRef.current, { opacity: 1, duration: 1 })
-      .to(titleRef.current, { opacity: 1, y: 0, duration: 0.8 }, "-=0.5")
-      .to(textRef.current, { opacity: 1, duration: 0.8 }, "-=0.5")
-      .to(buttonRef.current, { opacity: 1, y: 0, duration: 0.8 }, "-=0.5");
+    // Animation séquentielle avec durées dynamiques
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    tl.to(overlayRef.current, { opacity: 1, duration: overlayDur })
+      .to(titleRef.current,   { opacity: 1, y: 0, duration: titleDur },   `-=${titleDur * 0.6}`)
+      .to(textRef.current,    { opacity: 1, y: yShift, duration: textDur }, `-=${textDur * 0.6}`)
+      .to(buttonRef.current,  { opacity: 1, y: 0, duration: buttonDur },  `-=${buttonDur * 0.6}`);
     
     return () => {
       tl.kill();
@@ -48,7 +67,7 @@ export default function Hero() {
       <div className="absolute inset-0">
         <Image
           src="/images/atelier-menuiserie-4.webp"
-          alt="Atelier de menuiserie d&apos;Arnaud Labarre"
+          alt="Atelier de menuiserie d'Arnaud Labarre"
           fill
           className="object-cover"
           priority

@@ -129,3 +129,8 @@ html {
     @apply bg-background text-foreground;
   }
 }
+
+/* Remove grey flash from Next.js Image fill placeholder */
+[data-nimg="fill"] {
+  background-color: transparent !important;
+}

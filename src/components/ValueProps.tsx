@@ -9,12 +9,8 @@ import ScrollAnimation from '@/components/ui/scroll-animation'
 export default function ValueProps() {
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const [isPortraitMode, setIsPortraitMode] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    // Indiquer que le composant est monté côté client
-    setIsMounted(true);
-    
     function updateSize() {
       setIsMobileOrTablet(window.innerWidth < 768 || (window.innerWidth < window.innerHeight));
       setIsPortraitMode(window.innerHeight > window.innerWidth);
@@ -24,7 +20,7 @@ export default function ValueProps() {
     return () => window.removeEventListener('resize', updateSize);
   }, []);
 
-  const isMobilePortrait = isMounted && isMobileOrTablet && isPortraitMode;
+  const isMobilePortrait = isMobileOrTablet && isPortraitMode;
 
   const titleDuration = isMobilePortrait ? 0.6 : 0.8;
   const titleThreshold = isMobilePortrait ? 0.1 : 0.2;
@@ -34,64 +30,6 @@ export default function ValueProps() {
 
   const ctaDuration = isMobilePortrait ? 0.6 : 0.8;
   const ctaThreshold = isMobilePortrait ? 0.1 : 0.2;
-  
-  // Version de base pendant l'hydratation
-  if (!isMounted) {
-    return (
-      <section className="bg-[#f8f5ef] border-t border-[#e0dcd5] py-12 md:py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold text-[#3E2F1C] dark:text-[#F8F5EF] mb-8">
-            Pourquoi choisir Arnaud Labarre ?
-          </h2>
-          
-          <div className="mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 justify-items-center">
-              <div className="w-full bg-[#f3e5d0] dark:bg-[#5B270B] border border-[#A55B53] dark:border-[#3F1F14] rounded-xl shadow-md p-4">
-                <div className="flex flex-col items-center text-center">
-                  <Hammer className="size-6 text-[#A55B53] mb-2" />
-                  <h3 className="text-base font-semibold mb-1 text-[#3E2F1C]">Savoir‑faire traditionnel</h3>
-                  <p className="text-xs text-[#3E2F1C]">
-                    Techniques artisanales transmises depuis des générations.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="w-full bg-[#f3e5d0] dark:bg-[#5B270B] border border-[#A55B53] dark:border-[#3F1F14] rounded-xl shadow-md p-4">
-                <div className="flex flex-col items-center text-center">
-                  <TreeDeciduous className="size-6 text-[#A55B53] mb-2" />
-                  <h3 className="text-base font-semibold mb-1 text-[#3E2F1C]">Matériaux nobles</h3>
-                  <p className="text-xs text-[#3E2F1C]">
-                    Bois sélectionné pour sa durabilité et son esthétique.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="w-full bg-[#f3e5d0] dark:bg-[#5B270B] border border-[#A55B53] dark:border-[#3F1F14] rounded-xl shadow-md p-4">
-                <div className="flex flex-col items-center text-center">
-                  <Edit3 className="size-6 text-[#A55B53] mb-2" />
-                  <h3 className="text-base font-semibold mb-1 text-[#3E2F1C]">Design personnalisé</h3>
-                  <p className="text-xs text-[#3E2F1C]">
-                    Créations sur mesure pour s&apos;intégrer parfaitement à votre intérieur.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="text-center">
-            <Link href="#form">
-              <Button
-                size="lg"
-                className="rounded-full bg-[#3E2F1C] text-white hover:bg-[#2d2316] cursor-pointer"
-              >
-                Demandez un devis
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="bg-[#f8f5ef] border-t border-[#e0dcd5] py-12 md:py-16">
