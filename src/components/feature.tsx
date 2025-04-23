@@ -103,7 +103,7 @@ function Feature() {
               ) : (
                 <ScrollAnimation animation="fade-right" duration={1} threshold={0.2}>
                   <>
-                    <h3 className="text-xl md:text-3xl lg:text-5xl tracking-tighter lg:max-w-xl font-regular text-center lg:text-left">
+                    <h3 className="text-xl md:text-3xl lg:text-5xl tracking-tighter lg:max-w-xl font-regular text-center lg:text-left mb-4">
                       Donnez vie à votre intérieur avec un mobilier sur mesure
                     </h3>
                     <p className="text-sm md:text-base lg:text-lg max-w-xl lg:max-w-sm leading-relaxed tracking-tight text-left text-neutral-700 dark:text-neutral-300">

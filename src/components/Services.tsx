@@ -6,7 +6,6 @@ import { LoginForm } from "@/components/login-form"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 import { ChevronDown } from "lucide-react"
 import ScrollAnimation from '@/components/ui/scroll-animation'
-import TabletPortraitWrapper from '@/components/ui/tablet-portrait-wrapper'
 
 interface Feature {
   step: string
@@ -14,37 +13,38 @@ interface Feature {
   content: string
   image: string
 }
+
+const services: Feature[] = [
+  {
+    step: "01",
+    title: "Mobilier personnalisé haut de gamme",
+    content: "Création de meubles uniques en bois noble, pensés pour s'adapter parfaitement à votre intérieur.",
+    image: "/images/service-mobilier.jpg",
+  },
+  {
+    step: "02",
+    title: "Restauration & rénovation",
+    content: "Remise en état de vos meubles anciens avec des techniques traditionnelles, pour leur redonner toute leur noblesse.",
+    image: "/images/service-restauration.jpg",
+  },
+  {
+    step: "03",
+    title: "Agencement intérieur personnalisé",
+    content: "Conception d'espaces optimisés et esthétiques, adaptés à vos envies et à la configuration de votre habitat.",
+    image: "/images/service-amenagement.jpg",
+  },
+  {
+    step: "04",
+    title: "Conseil en design & finitions",
+    content: "Accompagnement sur le choix des essences, des lignes et des finitions pour un rendu à la fois harmonieux et fonctionnel.",
+    image: "/images/service-conseil.jpg",
+  },
+];
+
 export default function ServicesSectionExample() {
-  const features = [
-    {
-      step: "01",
-      title: "Mobilier personnalisé haut de gamme",
-      content: "Création de meubles uniques en bois noble, pensés pour s'adapter parfaitement à votre intérieur.",
-      image: "/images/service-mobilier.jpg",
-    },
-    {
-      step: "02",
-      title: "Restauration & rénovation",
-      content: "Remise en état de vos meubles anciens avec des techniques traditionnelles, pour leur redonner toute leur noblesse.",
-      image: "/images/service-restauration.jpg",
-    },
-    {
-      step: "03",
-      title: "Agencement intérieur personnalisé",
-      content: "Conception d'espaces optimisés et esthétiques, adaptés à vos envies et à la configuration de votre habitat.",
-      image: "/images/service-amenagement.jpg",
-    },
-    {
-      step: "04",
-      title: "Conseil en design & finitions",
-      content: "Accompagnement sur le choix des essences, des lignes et des finitions pour un rendu à la fois harmonieux et fonctionnel.",
-      image: "/images/service-conseil.jpg",
-    },
-  ];
- 
   return (
     <div className="w-full">
-      <FeatureSteps features={features} title="Nos Services" autoPlayInterval={1000} />
+      <FeatureSteps features={services} title="Nos Services" autoPlayInterval={1000} />
     </div>
   );
 }
@@ -86,8 +86,6 @@ export function FeatureSteps({
       window.removeEventListener("orientationchange", handleResize)
     }
   }, [])
-
-  const isDesktopLandscape = !isPortraitMobile;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -234,5 +232,4 @@ export function FeatureSteps({
       </div>
     </div>
   )
-}
-
+} 
