@@ -44,6 +44,7 @@ export default function FAQ() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   
+  const isDesktopLandscape = !isMobileOrTablet;
   const isMobilePortrait = isMobileOrTablet && isPortraitMode;
 
   const titleDuration = isMobilePortrait ? 0.6 : 0.8;
@@ -57,28 +58,43 @@ export default function FAQ() {
   return (
     <div className="w-full bg-[#F8F5EF]">
       <div className="container mx-auto py-20 px-4 text-[#3E2F1C]">
-        <ScrollAnimation animation="fade-up" duration={titleDuration} threshold={titleThreshold}>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center">
-            FAQ
-          </h2>
-        </ScrollAnimation>
+        {isDesktopLandscape ? (
+          <ScrollAnimation animation="fade-up" duration={0.8} threshold={0.2}>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center">
+              FAQ
+            </h2>
+          </ScrollAnimation>
+        ) : (
+          <ScrollAnimation animation="fade-up" duration={0.6} threshold={0.1}>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center">
+              FAQ
+            </h2>
+          </ScrollAnimation>
+        )}
         
-        <ScrollAnimation 
-          animation="fade-up" 
-          delay={accordionDelay} 
-          duration={accordionDuration} 
-          threshold={accordionThreshold} 
-          stagger={accordionStagger}
-        >
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, idx) => (
-              <AccordionItem key={idx} value={`faq-${idx}`}>
-                <AccordionTrigger>{faq.question}</AccordionTrigger>
-                <AccordionContent>{faq.answer}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </ScrollAnimation>
+        {isDesktopLandscape ? (
+          <ScrollAnimation animation="fade-up" delay={0.2} duration={1} threshold={0.2} stagger={0.15}>
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq, idx) => (
+                <AccordionItem key={idx} value={`faq-${idx}`}>
+                  <AccordionTrigger>{faq.question}</AccordionTrigger>
+                  <AccordionContent>{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </ScrollAnimation>
+        ) : (
+          <ScrollAnimation animation="fade-up" delay={0.1} duration={0.8} threshold={0.1} stagger={0.1}>
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq, idx) => (
+                <AccordionItem key={idx} value={`faq-${idx}`}>
+                  <AccordionTrigger>{faq.question}</AccordionTrigger>
+                  <AccordionContent>{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </ScrollAnimation>
+        )}
       </div>
     </div>
   )
