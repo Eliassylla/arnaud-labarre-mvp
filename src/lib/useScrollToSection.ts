@@ -20,7 +20,7 @@ export const useScrollToSection = () => {
 
     // Valeurs par défaut
     const { 
-      offset = 180, // Offset par défaut (même que notre scroll-margin-top)
+      offset = window.innerWidth <= 768 ? 240 : 220, // Offset selon la taille d'écran (mobile: 240px, desktop: 220px)
       behavior = 'smooth' 
     } = options;
 
