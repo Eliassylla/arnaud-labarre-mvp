@@ -3,25 +3,43 @@
 import { useEffect } from 'react';
 
 export default function ScrollToTop() {
+  // Appliquer immédiatement un style pour prévenir le flash
+  useEffect(() => {
+    // Injecter un style dès que possible pour éviter le flash
+    if (typeof window !== 'undefined') {
+      // Vérifier si c'est un rechargement
+      const isReload = 
+        window.performance?.navigation?.type === 1 || 
+        sessionStorage.getItem('page_reloaded') === 'true';
+      
+      if (isReload) {
+        // Créer et injecter un style immédiatement
+        const initialStyle = document.createElement('style');
+        initialStyle.id = 'scroll-reset-style';
+        initialStyle.innerHTML = `
+          body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #3E2F1C;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+            pointer-events: none;
+          }
+        `;
+        document.head.appendChild(initialStyle);
+      }
+    }
+  }, []);
+  
   useEffect(() => {
     // Fonction pour s'assurer que la page est au sommet
     const resetViewport = () => {
       if (typeof window !== 'undefined') {
-        // Masquer le défilement avec un style global temporaire
-        const style = document.createElement('style');
-        style.innerHTML = `
-          html, body {
-            overflow: hidden !important;
-            height: 100vh !important;
-            scroll-behavior: auto !important;
-          }
-          body {
-            opacity: 0;
-            transition: opacity 0.1s;
-          }
-        `;
-        document.head.appendChild(style);
-        
         // Reset immédiat de la position de défilement
         window.scrollTo(0, 0);
         document.body.scrollTop = 0;
@@ -36,17 +54,40 @@ export default function ScrollToTop() {
           );
         }
         
-        // Petit délai pour s'assurer que tout est prêt
+        // Attendre que tout soit bien chargé avant de faire disparaître l'overlay
         setTimeout(() => {
-          // Modifier le style pour révéler le contenu
-          document.body.style.opacity = '1';
-          // Supprimer le style temporaire après la transition
-          setTimeout(() => {
-            if (document.head.contains(style)) {
-              document.head.removeChild(style);
+          // Trouver ou créer l'élément de style d'overlay
+          let overlayStyle = document.getElementById('scroll-reset-style');
+          if (!overlayStyle) {
+            overlayStyle = document.createElement('style');
+            overlayStyle.id = 'scroll-reset-style';
+            document.head.appendChild(overlayStyle);
+          }
+          
+          // Faire disparaître l'overlay en douceur
+          overlayStyle.innerHTML = `
+            body::before {
+              content: '';
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: #3E2F1C;
+              z-index: 9999;
+              opacity: 0;
+              transition: opacity 0.3s ease-out;
+              pointer-events: none;
             }
-          }, 150);
-        }, 100);
+          `;
+          
+          // Nettoyer le style après la transition
+          setTimeout(() => {
+            if (overlayStyle && document.head.contains(overlayStyle)) {
+              document.head.removeChild(overlayStyle);
+            }
+          }, 400);
+        }, 200);
       }
     };
 
