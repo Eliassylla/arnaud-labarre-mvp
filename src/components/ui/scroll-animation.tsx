@@ -45,9 +45,12 @@ export default function ScrollAnimation({
     // Ne rien faire côté serveur ou si le composant n'est pas monté
     if (typeof window === 'undefined' || !isMounted) return;
 
+    // Stocker une référence à l'élément container qui persiste entre re-renders
+    const containerElement = containerRef.current;
+
     // Nettoyer les anciens triggers avant d'en créer de nouveaux
     ScrollTrigger.getAll().forEach(trigger => {
-      if (trigger.vars.trigger === containerRef.current) {
+      if (trigger.vars.trigger === containerElement) {
         trigger.kill();
       }
     });
@@ -84,12 +87,12 @@ export default function ScrollAnimation({
     // Si stagger > 0, animer les enfants individuellement
     const target = stagger > 0 && childrenRef.current ? 
       childrenRef.current.children : 
-      containerRef.current;
+      containerElement;
     
-    if (!target || !containerRef.current) return;
+    if (!target || !containerElement) return;
 
     // S'assurer que le conteneur est visible avant d'animer
-    gsap.set(containerRef.current, { visibility: 'visible' });
+    gsap.set(containerElement, { visibility: 'visible' });
     
     // Préparer l'animation
     gsap.set(target, animationConfig);
@@ -99,7 +102,7 @@ export default function ScrollAnimation({
       // Créer l'animation
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: containerRef.current,
+          trigger: containerElement,
           start: `top ${100 - threshold * 100}%`,
           toggleActions: once ? 'play none none none' : 'play reverse play reverse',
           markers: false, // Mettre à true pour déboguer
@@ -133,7 +136,7 @@ export default function ScrollAnimation({
     // Nettoyer lors du démontage
     return () => {
       ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.vars.trigger === containerRef.current) {
+        if (trigger.vars.trigger === containerElement) {
           trigger.kill();
         }
       });

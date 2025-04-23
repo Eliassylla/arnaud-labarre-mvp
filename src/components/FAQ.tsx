@@ -48,7 +48,6 @@ export default function FAQ() {
   }, []);
   
   const isDesktopLandscape = isMounted && !isMobileOrTablet;
-  const isMobilePortrait = isMounted && isMobileOrTablet && isPortraitMode;
 
   if (!isMounted) {
     return (

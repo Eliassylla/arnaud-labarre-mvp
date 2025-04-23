@@ -59,7 +59,7 @@ export default function Hero() {
     return () => {
       tl.kill();
     };
-  }, []);
+  }, [overlayDur, titleDur, textDur, buttonDur, yShift]);
   
   return (
     <section className="relative w-full h-screen">
