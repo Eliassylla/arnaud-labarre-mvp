@@ -1,11 +1,11 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { LoginForm } from "@/components/login-form"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 import { ChevronDown } from "lucide-react"
+import ScrollAnimation from '@/components/ui/scroll-animation'
 
 interface Feature {
   step: string
@@ -96,25 +96,15 @@ export function FeatureSteps({
   return (
     <div className={cn("p-8 md:p-12 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
       <div className="w-full">
-        <motion.h2 
-          className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mx-auto ${isPortraitMobile ? 'mb-1' : 'mb-6'}`}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-        >
-          {title}
-        </motion.h2>
+        <ScrollAnimation animation="fade-up" duration={0.7}>
+          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mx-auto ${isPortraitMobile ? 'mb-1' : 'mb-6'}`}>
+            {title}
+          </h2>
+        </ScrollAnimation>
 
         <div className={`flex flex-col md:grid md:grid-cols-2 ${isPortraitMobile ? 'gap-3' : 'gap-6'} md:gap-10 items-start`}>
           {isPortraitMobile ? (
-            <motion.div 
-              className="w-full flex justify-center"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7 }}
-            >
+            <ScrollAnimation animation="fade-up">
               <div className="w-full flex justify-center mb-3">
                 <div className="w-full max-w-md border rounded-md overflow-hidden">
                   <button 
@@ -151,60 +141,48 @@ export function FeatureSteps({
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </ScrollAnimation>
           ) : (
-            <motion.div 
-              className="order-2 md:order-1 space-y-8 w-full"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-            >
-              {features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  className="flex items-center gap-6 md:gap-8"
-                  initial={{ opacity: 0.3 }}
-                  animate={{ opacity: index === currentFeature ? 1 : 0.3 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <motion.div
-                    className={cn(
-                      "w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-2",
-                      index === currentFeature
-                        ? "bg-primary border-primary text-primary-foreground scale-110"
-                        : "bg-muted border-muted-foreground",
-                    )}
+            <ScrollAnimation animation="fade-left" className="order-2 md:order-1">
+              <div className="space-y-8 w-full">
+                {features.map((feature, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center gap-6 md:gap-8"
+                    style={{ opacity: index === currentFeature ? 1 : 0.3 }}
                   >
-                    {index <= currentFeature ? (
-                      <span className="text-lg font-bold">✓</span>
-                    ) : (
-                      <span className="text-lg font-semibold">{index + 1}</span>
-                    )}
-                  </motion.div>
+                    <div
+                      className={cn(
+                        "w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-2",
+                        index === currentFeature
+                          ? "bg-primary border-primary text-primary-foreground scale-110"
+                          : "bg-muted border-muted-foreground",
+                      )}
+                    >
+                      {index <= currentFeature ? (
+                        <span className="text-lg font-bold">✓</span>
+                      ) : (
+                        <span className="text-lg font-semibold">{index + 1}</span>
+                      )}
+                    </div>
 
-                  <div className="flex-1">
-                    <h3 className="text-xl md:text-2xl font-semibold">{feature.title || feature.step}</h3>
-                    <p className="text-sm md:text-lg text-[#3E2F1C]">{feature.content}</p>
+                    <div className="flex-1">
+                      <h3 className="text-xl md:text-2xl font-semibold">{feature.title || feature.step}</h3>
+                      <p className="text-sm md:text-lg text-[#3E2F1C]">{feature.content}</p>
+                    </div>
                   </div>
-                </motion.div>
-              ))}
-            </motion.div>
+                ))}
+              </div>
+            </ScrollAnimation>
           )}
 
-          <motion.div 
-            id="form" 
-            className="order-1 md:order-2 w-full pt-6 md:pt-8" 
-            style={{ scrollMarginTop: "120px" }}
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-          >
-            <div className="w-full flex justify-center">
-              <LoginForm />
+          <ScrollAnimation animation="fade-right" delay={0.2} className="order-1 md:order-2">
+            <div id="form" className="w-full pt-6 md:pt-8" style={{ scrollMarginTop: "120px" }}>
+              <div className="w-full flex justify-center">
+                <LoginForm />
+              </div>
             </div>
-          </motion.div>
+          </ScrollAnimation>
         </div>
       </div>
     </div>

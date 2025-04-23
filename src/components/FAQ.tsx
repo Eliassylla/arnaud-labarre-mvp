@@ -1,12 +1,8 @@
 'use client'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
+import ScrollAnimation from '@/components/ui/scroll-animation'
 
 export default function FAQ() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  
   const faqs = [
     {
       question: "Quels types de meubles proposez-vous ?",
@@ -30,48 +26,25 @@ export default function FAQ() {
     }
   ]
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-  
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-  };
-
   return (
-    <div ref={ref} className="w-full bg-[#F8F5EF]">
+    <div className="w-full bg-[#F8F5EF]">
       <div className="container mx-auto py-20 px-4 text-[#3E2F1C]">
-        <motion.h2 
-          className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-        >
-          FAQ
-        </motion.h2>
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate={isInView ? "show" : "hidden"}
-        >
+        <ScrollAnimation animation="fade-up" duration={0.7}>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center">
+            FAQ
+          </h2>
+        </ScrollAnimation>
+        
+        <ScrollAnimation animation="fade-up" delay={0.2} stagger={0.1}>
           <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((faq, idx) => (
-              <motion.div key={idx} variants={item} transition={{ duration: 0.5 }}>
-                <AccordionItem value={`faq-${idx}`}>
-                  <AccordionTrigger>{faq.question}</AccordionTrigger>
-                  <AccordionContent>{faq.answer}</AccordionContent>
-                </AccordionItem>
-              </motion.div>
+              <AccordionItem key={idx} value={`faq-${idx}`}>
+                <AccordionTrigger>{faq.question}</AccordionTrigger>
+                <AccordionContent>{faq.answer}</AccordionContent>
+              </AccordionItem>
             ))}
           </Accordion>
-        </motion.div>
+        </ScrollAnimation>
       </div>
     </div>
   )
