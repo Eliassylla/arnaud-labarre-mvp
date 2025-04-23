@@ -89,8 +89,8 @@ export default function Hero() {
         >
           Mobilier d&apos;exception en bois noble façonné sur mesure pour sublimer votre intérieur.
         </p>
-        <div ref={buttonRef}>
-          <PhoneMenu rounded={true} size="lg" className="bg-white text-black" />
+        <div ref={buttonRef} className="mt-4 bg-black/30 backdrop-blur-sm rounded-lg px-5 py-3">
+          <PhoneMenu />
         </div>
       </div>
     </section>
