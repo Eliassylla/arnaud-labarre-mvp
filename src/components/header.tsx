@@ -10,12 +10,20 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Menu, MoveRight, X } from "lucide-react";
-import { useState } from "react";
-import { useScrollToSection } from "@/lib/useScrollToSection";
+import { useState, useCallback } from "react";
 import { PhoneMenu } from "@/components/ui/phone-menu";
+import { cn } from "@/lib/utils";
+import { useScrollToSection } from "@/hooks/useScrollToSection";
 
 function Header1() {
+    // Use our custom scroll to section hook
     const { scrollToSection } = useScrollToSection();
+    
+    // Function to scroll to services section
+    const scrollToServices = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        scrollToSection('services');
+    };
     
     const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         // Si c'est un lien d'ancrage (commence par #), utiliser notre fonction personnalisée
@@ -164,8 +172,8 @@ function Header1() {
                 <div className="flex justify-end w-full gap-4">
                     <div className="border-r hidden lg:inline"></div>
                     <PhoneMenu variant="outline" buttonText="Appeler" />
-                    <a href="#form" onClick={(e) => handleNavigation(e, '#form')}>
-                        <Button className="cursor-pointer bg-[#f3e5d0] text-[#3E2F1C] hover:bg-[#ecddc8] border border-[#A55B53]">Devis</Button>
+                    <a href="#services" onClick={scrollToServices}>
+                        <Button className="cursor-pointer bg-[#f3e5d0] text-[#3E2F1C] hover:bg-[#ecddc8] border border-[#C17E6A]">Devis</Button>
                     </a>
                 </div>
             </div>

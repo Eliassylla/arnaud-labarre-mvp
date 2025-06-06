@@ -1,0 +1,34 @@
+/**
+ * Configuration for scroll offsets by section ID.
+ * Use this to customize how far below the header each section should appear.
+ * 
+ * Values are in pixels and will be subtracted from the header height.
+ * - Positive values = more space (section appears lower)
+ * - Negative values = less space (section appears higher)
+ */
+export const sectionOffsets: Record<string, number> = {
+  'accueil': -120,        // Default - right below header
+  'a-propos': -120,     // Slightly higher than default 
+  'services': -120,     // Higher to show more content
+  'atouts': -220,
+  'realisations': -220,
+  'faq': -220,
+  'contact': -30,
+  
+  // If you need to target the form specifically (for "Demander votre devis" button)
+  'form': -80,         // Show more of the form when scrolling to it
+  
+  // Default value for sections not explicitly listed
+  'default': -20
+};
+
+/**
+ * Gets the offset for a specific section ID
+ */
+export function getSectionOffset(sectionId: string): number {
+  // Clean the section ID (remove any # prefix)
+  const cleanId = sectionId.replace(/^#/, '');
+  
+  // Return the specific offset or the default if not found
+  return sectionOffsets[cleanId] ?? sectionOffsets.default;
+} 

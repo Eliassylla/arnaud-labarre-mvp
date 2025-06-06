@@ -33,11 +33,24 @@ export function PhoneMenu({
 }: PhoneMenuProps) {
   const [showMenu, setShowMenu] = useState(false);
   
+  // Handle opening/closing the menu
+  const handleOpen = () => setShowMenu(true);
+  const handleClose = () => setShowMenu(false);
+  
   return (
     <div className="relative inline-block text-left">
+      {/* Trigger button */}
       <div
-        onMouseEnter={() => setShowMenu(true)}
-        onMouseLeave={() => setShowMenu(false)}
+        onMouseEnter={handleOpen}
+        onMouseLeave={(e) => {
+          // Check if we're leaving for the dropdown content
+          // Only close if not moving to the dropdown
+          const relatedTarget = e.relatedTarget as Node;
+          const dropdown = document.getElementById('phone-dropdown');
+          if (dropdown && !dropdown.contains(relatedTarget)) {
+            handleClose();
+          }
+        }}
       >
         <Button 
           variant={variant}
@@ -47,23 +60,29 @@ export function PhoneMenu({
           <Phone className="h-4 w-4" />
           {buttonText}
         </Button>
-        
-        {showMenu && (
-          <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
-            <div className="py-1">
-              {phoneNumbers.map((item) => (
-                <Link 
-                  key={item.number} 
-                  href={`tel:${item.number}`}
-                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  <span>{item.label} : {item.display}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
+      
+      {/* Dropdown content */}
+      {showMenu && (
+        <div 
+          id="phone-dropdown"
+          className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
+          onMouseEnter={handleOpen}
+          onMouseLeave={handleClose}
+        >
+          <div className="py-1">
+            {phoneNumbers.map((item) => (
+              <Link 
+                key={item.number} 
+                href={`tel:${item.number}`}
+                className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                <span>{item.label} : {item.display}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 } 

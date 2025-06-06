@@ -1,17 +1,20 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, RefCallback, useLayoutEffect } from "react"
 import { cn } from "@/lib/utils"
 import { LoginForm } from "@/components/login-form"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
+import Image from 'next/image'
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/components/ui/card"
+import { gsap, ScrollTrigger } from '@/lib/gsap/gsap-config'
 import { ChevronDown } from "lucide-react"
-import ScrollAnimation from '@/components/ui/scroll-animation'
 
 interface Feature {
-  step: string
-  title?: string
-  content: string
-  image: string
+  step: string;
+  title: string;
+  content: string;
+  image: string;
 }
 
 const services: Feature[] = [
@@ -42,9 +45,22 @@ const services: Feature[] = [
 ];
 
 export default function ServicesSectionExample() {
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileOrTablet(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <div className="w-full">
-      <FeatureSteps features={services} title="Nos Services" autoPlayInterval={1000} />
+      <FeatureSteps features={services} title="Nos Services" />
     </div>
   );
 }
@@ -53,23 +69,37 @@ interface FeatureStepsProps {
   features: Feature[]
   className?: string
   title?: string
-  autoPlayInterval?: number
 }
 
 export function FeatureSteps({
   features,
   className,
   title = "How to get Started",
-  autoPlayInterval = 6000,
 }: FeatureStepsProps) {
-  const [currentFeature, setCurrentFeature] = useState(0)
-  const [progress, setProgress] = useState(0)
-  const [isPortraitMobile, setIsPortraitMobile] = useState(false)
-  const [isTabletPortrait, setIsTabletPortrait] = useState(false)
-  const [isServicesOpen, setIsServicesOpen] = useState(false)
+  const [isPortraitMobile, setIsPortraitMobile] = useState(false);
+  const [isTabletPortrait, setIsTabletPortrait] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   
+  // Refs for GSAP animations
+  const servicesRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const accordionRef = useRef<HTMLDivElement>(null);
+  const accordionItemsRef = useRef<HTMLElement[]>([]);
+  const formRef = useRef<HTMLDivElement>(null);
+  const mobileAccordionRef = useRef<HTMLDivElement>(null);
+  
+  // Set client-side flag
   useEffect(() => {
-    const handleResize = () => {
+    setIsClient(true);
+  }, []);
+  
+  // Handle responsive state with debounced resize
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+    
+    function handleResize() {
       const isPortrait = window.matchMedia("(orientation: portrait)").matches;
       const isMobile = window.innerWidth < 768;
       const isTablet = window.innerWidth >= 768 && window.innerWidth <= 1024;
@@ -77,38 +107,116 @@ export function FeatureSteps({
       setIsPortraitMobile((isMobile || isTablet) && isPortrait);
       setIsTabletPortrait(isTablet && isPortrait);
     }
-  
-    handleResize()
-    window.addEventListener("resize", handleResize)
-    window.addEventListener("orientationchange", handleResize)
-    return () => {
-      window.removeEventListener("resize", handleResize)
-      window.removeEventListener("orientationchange", handleResize)
+    
+    // Initial check
+    handleResize();
+    
+    // Add debounced event listener
+    function debouncedResize() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(handleResize, 100);
     }
-  }, [])
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (progress < 100) {
-        setProgress((prev) => prev + 100 / (autoPlayInterval / 100))
-      } else {
-        setCurrentFeature((prev) => (prev + 1) % features.length)
-        setProgress(0)
+    
+    window.addEventListener("resize", debouncedResize);
+    window.addEventListener("orientationchange", debouncedResize);
+    
+    // Cleanup
+    return () => {
+      clearTimeout(resizeTimeout);
+      window.removeEventListener("resize", debouncedResize);
+      window.removeEventListener("orientationchange", debouncedResize);
+    };
+  }, []);
+  
+  // GSAP animations with ScrollTrigger
+  useLayoutEffect(() => {
+    // Skip if not client-side
+    if (!isClient) return;
+    
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Set initial state to prevent flash
+    gsap.set(titleRef.current, { autoAlpha: 0, y: 40 });
+    
+    if (accordionItemsRef.current && accordionItemsRef.current.length) {
+      gsap.set(accordionItemsRef.current, { autoAlpha: 0, y: 20 });
+    }
+    
+    gsap.set(formRef.current, { autoAlpha: 0, x: 40 });
+    
+    // Create a GSAP context for proper cleanup
+    const ctx = gsap.context(() => {
+      // Animate the heading
+      const titleTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: servicesRef.current,
+          start: "top 60%",
+          end: "center center",
+          toggleActions: "play none none none",
+        }
+      });
+      
+      titleTl.to(titleRef.current, {
+        y: 0,
+        autoAlpha: 1,
+        duration: 0.8,
+        ease: "power2.out"
+      });
+      
+      // Animate the accordion items with stagger
+      if (accordionItemsRef.current && accordionItemsRef.current.length) {
+        const accordionTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: accordionRef.current,
+            start: "top 65%",
+            end: "bottom center",
+            toggleActions: "play none none none",
+          }
+        });
+        
+        accordionTl.to(accordionItemsRef.current, {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out"
+        });
       }
-    }, 100)
-
-    return () => clearInterval(timer)
-  }, [progress, features.length, autoPlayInterval])
-
-  const titleDuration = isPortraitMobile ? 0.6 : 0.8;
-  const titleThreshold = isPortraitMobile ? 0.1 : 0.2;
-
-  const formDuration = isPortraitMobile ? 0.6 : 0.8;
-  const formThreshold = isPortraitMobile ? 0.1 : 0.2;
-  const formDelay = isPortraitMobile ? 0 : 0.2;
-
-  const toggleServices = () => {
-    setIsServicesOpen(!isServicesOpen);
+      
+      // Animate the form
+      const formTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: formRef.current,
+          start: "top 70%",
+          end: "bottom center",
+          toggleActions: "play none none none",
+        }
+      });
+      
+      formTl.to(formRef.current, {
+        x: 0,
+        autoAlpha: 1,
+        duration: 0.9,
+        ease: "power2.out"
+      });
+      
+      // Refresh ScrollTrigger to ensure proper initialization
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 200);
+      
+    }, servicesRef); // Scope to services section
+    
+    // Cleanup function
+    return () => ctx.revert();
+  }, [isClient, accordionItemsRef.current?.length]);
+  
+  // Add element to accordionItemsRef
+  const addToAccordionRefs: RefCallback<HTMLElement> = (el) => {
+    if (el && !accordionItemsRef.current.includes(el)) {
+      accordionItemsRef.current.push(el);
+    }
   };
 
   // Style pour tablette portrait
@@ -119,116 +227,120 @@ export function FeatureSteps({
   };
 
   return (
-    <div className={cn("p-8 md:p-12 md:pb-20 lg:pb-28 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}>
-      <div className="w-full max-w-5xl mx-auto" style={tabletPortraitStyle}>
-        <ScrollAnimation animation="fade-up" duration={titleDuration} threshold={titleThreshold}>
-          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mx-auto ${isPortraitMobile ? 'mb-6' : 'mb-10'}`}>
-            {title}
-          </h2>
-        </ScrollAnimation>
+    <div 
+      ref={servicesRef}
+      id="services"
+      className={cn("p-8 py-8 md:p-12 md:py-16 lg:py-20 md:pb-16 lg:pb-20 bg-[#F9F6F1] text-[#3E2F1C] w-full", className)}
+    >
+      <div className="w-full max-w-6xl mx-auto" style={tabletPortraitStyle}>
+        {/* Desktop-only title */}
+        <h2 
+          ref={titleRef}
+          className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-10 text-center services-title hidden md:block"
+        >
+          {title}
+        </h2>
 
-        {/* Vue pour mobile et tablette portrait */}
-        {isPortraitMobile ? (
-          <div className="flex flex-col items-center w-full">
-            {/* Accordéon de services */}
-            <ScrollAnimation animation="fade-up" duration={0.6} threshold={0.1} className="w-full mb-8">
-              <div className="w-full max-w-md mx-auto">
-                <div className="w-full border border-[#e0d7c8] rounded-md overflow-hidden">
-                  <button 
-                    className="w-full flex items-center justify-center gap-2 py-2 text-base font-medium hover:bg-[#f1ede5] transition-colors"
-                    onClick={toggleServices}
-                  >
-                    <span className="inline-flex items-center justify-center text-center w-full">
-                      Voir tous les services
-                      <ChevronDown 
-                        className={`h-4 w-4 ml-2 transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`}
-                      />
-                    </span>
-                  </button>
-                
-                  <div 
-                    className={`overflow-hidden transition-all duration-300 ${
-                      isServicesOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
-                    }`}
-                  >
-                    <div className="px-4 py-2">
-                      <Accordion type="multiple" className="w-full">
-                        {features.map((feature, idx) => (
-                          <AccordionItem value={String(idx)} key={idx}>
-                            <AccordionTrigger>
-                              <span className="text-base font-medium">{feature.title}</span>
-                            </AccordionTrigger>
-                            <AccordionContent>
-                              <p className="text-sm text-[#3E2F1C]">{feature.content}</p>
-                            </AccordionContent>
-                          </AccordionItem>
-                        ))}
-                      </Accordion>
-                    </div>
-                  </div>
+        {/* Mobile-only accordion with nested services */}
+        <div className="block md:hidden mb-4" ref={mobileAccordionRef}>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="services-section">
+              <AccordionTrigger className="text-3xl font-bold text-center w-full justify-center flex-col md:flex-row [&>span:last-child]:hidden">
+                <div className="flex items-center justify-center">
+                  {title}
+                  <ChevronDown className="ml-2 h-6 w-6 text-[#3E2F1C] shrink-0 transition-transform duration-300 mobile-accordion-icon" />
                 </div>
-              </div>
-            </ScrollAnimation>
-
-            {/* Formulaire pour mobile et tablette portrait */}
-            <ScrollAnimation animation="fade-up" duration={0.6} threshold={0.1} className="w-full">
-              <div 
-                id="form"
-                className="w-full flex justify-center items-center"
-                style={{ scrollMarginTop: "120px" }}
-              >
-                <div className="w-full max-w-md mx-auto">
-                  <LoginForm className="w-full" />
-                </div>
-              </div>
-            </ScrollAnimation>
-          </div>
-        ) : (
-          // Vue pour desktop
-          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-10 items-start">
-            <ScrollAnimation animation="fade-left" className="order-2 lg:order-1">
-              <div className="space-y-8 w-full">
-                {features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-6 md:gap-8"
-                    style={{ opacity: index === currentFeature ? 1 : 0.3 }}
-                  >
-                    <div
-                      className={cn(
-                        "w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-2",
-                        index === currentFeature
-                          ? "bg-primary border-primary text-primary-foreground scale-110"
-                          : "bg-muted border-muted-foreground",
-                      )}
+              </AccordionTrigger>
+              <AccordionContent>
+                <Accordion type="single" collapsible className="w-full mt-4">
+                  {features.map((service, index) => (
+                    <AccordionItem 
+                      key={`mobile-service-${index}`}
+                      value={`service-${index}`} 
+                      className="border-b border-[#C17E6A]/30"
                     >
-                      {index <= currentFeature ? (
-                        <span className="text-lg font-bold">✓</span>
-                      ) : (
-                        <span className="text-lg font-semibold">{index + 1}</span>
-                      )}
-                    </div>
+                      <AccordionTrigger className="text-[#3E2F1C] font-medium">
+                        {service.title}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-[#3E2F1C]/80">
+                        {service.content}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
 
-                    <div className="flex-1">
-                      <h3 className="text-xl md:text-2xl font-semibold">{feature.title || feature.step}</h3>
-                      <p className="text-sm md:text-lg text-[#3E2F1C]">{feature.content}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </ScrollAnimation>
-
-            <ScrollAnimation animation="fade-right" duration={formDuration} delay={formDelay} threshold={formThreshold} className="order-1 lg:order-2 w-full">
-              <div
-                id="form"
-                className="w-full flex flex-col items-center justify-center"
-                style={{ scrollMarginTop: "120px" }}
-              >
-                <LoginForm className="w-full max-w-md" />
-              </div>
-            </ScrollAnimation>
+        <div className="mt-0 md:mt-50 lg:mt-8 w-full rounded-xl p-6 md:p-8 bg-transparent">
+          {/* Form component (both mobile and desktop) */}
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 items-start">
+            {/* Form component */}
+            <div ref={formRef} className="order-1 lg:order-2 w-full mx-auto md:max-w-lg contact-form text-center md:text-left">
+              <LoginForm />
+            </div>
+            
+            {/* Desktop-only accordion content */}
+            <div ref={accordionRef} className="order-2 lg:order-1 w-full md:max-w-md lg:max-w-lg mx-auto lg:mx-0 px-4 hidden md:block">
+              {/* Desktop/tablet title */}
+              <h3 className="text-2xl md:text-3xl font-bold mb-6 text-[#3E2F1C] text-center lg:text-left">
+                Discutons de votre projet
+              </h3>
+              
+              <Accordion type="single" collapsible className="w-full mb-8">
+                <AccordionItem 
+                  value="item-1" 
+                  className="border-b border-[#C17E6A]/30"
+                  ref={addToAccordionRefs}
+                >
+                  <AccordionTrigger className="text-[#3E2F1C] font-medium">
+                    Mobilier personnalisé haut de gamme
+                  </AccordionTrigger>
+                  <AccordionContent className="text-[#3E2F1C]/80">
+                    Création de meubles uniques en bois noble, pensés pour s'adapter parfaitement à votre intérieur.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem 
+                  value="item-2" 
+                  className="border-b border-[#C17E6A]/30"
+                  ref={addToAccordionRefs}
+                >
+                  <AccordionTrigger className="text-[#3E2F1C] font-medium">
+                    Restauration & rénovation
+                  </AccordionTrigger>
+                  <AccordionContent className="text-[#3E2F1C]/80">
+                    Remise en état de vos meubles anciens avec des techniques traditionnelles, pour leur redonner toute leur noblesse.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem 
+                  value="item-3" 
+                  className="border-b border-[#C17E6A]/30"
+                  ref={addToAccordionRefs}
+                >
+                  <AccordionTrigger className="text-[#3E2F1C] font-medium">
+                    Agencement intérieur personnalisé
+                  </AccordionTrigger>
+                  <AccordionContent className="text-[#3E2F1C]/80">
+                    Conception d'espaces optimisés et esthétiques, adaptés à vos envies et à la configuration de votre habitat.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem 
+                  value="item-4" 
+                  className="border-b border-[#C17E6A]/30"
+                  ref={addToAccordionRefs}
+                >
+                  <AccordionTrigger className="text-[#3E2F1C] font-medium">
+                    Conseil en design & finitions
+                  </AccordionTrigger>
+                  <AccordionContent className="text-[#3E2F1C]/80">
+                    Accompagnement sur le choix des essences, des lignes et des finitions pour un rendu à la fois harmonieux et fonctionnel.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   )

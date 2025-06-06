@@ -17,7 +17,7 @@ export function LoginForm({
 
   return (
     <div className={cn("w-full mx-auto", className)} {...props}>
-      <Card className="w-full bg-[#f3e5d0] border border-[#A55B53] shadow-lg p-2 sm:p-3 md:p-4 rounded-2xl">
+      <Card className="w-full bg-[#f3e5d0] border border-[#C17E6A] shadow-lg p-2 sm:p-3 md:p-4 rounded-2xl">
         <CardHeader className="p-3 md:p-4">
           <CardTitle className="font-semibold text-[#3E2F1C] text-center">Demander votre devis gratuit</CardTitle>
         </CardHeader>
@@ -47,7 +47,7 @@ export function LoginForm({
             </div>
             <Button
               type="submit"
-              className="w-full bg-[#3E2F1C] text-white hover:bg-[#2d2316] focus:ring-2 focus:ring-offset-2 focus:ring-[#3E2F1C] rounded-xl text-sm"
+              className="w-full cursor-pointer bg-[#f3e5d0] text-[#3E2F1C] hover:bg-[#ecddc8] border border-[#C17E6A] devis-button rounded-xl text-sm"
             >
               Envoyer
             </Button>

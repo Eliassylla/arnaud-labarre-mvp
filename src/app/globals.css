@@ -12,7 +12,49 @@ html {
 
 /* Style spécifique pour le formulaire en vue portrait */
 .form-portrait .bg-\[\#f3e5d0\], .tablet-form .bg-\[\#f3e5d0\] {
-  border: 1px solid #A55B53 !important;
+  border: 1px solid #C17E6A !important;
+}
+
+/* Standardize border color for service cards and value prop cards */
+.service-card {
+  border: 1px solid #C17E6A !important;
+  background-color: #f3e5d0 !important;
+}
+
+/* Target ValueProps cards */
+#atouts .bg-white {
+  border: 1px solid #C17E6A !important;
+  background-color: #f3e5d0 !important;
+}
+
+/* Apply consistent styling to valueprop-card */
+.valueprop-card {
+  background-color: #f3e5d0 !important;
+  border: 1px solid #C17E6A !important;
+  color: #3E2F1C !important;
+}
+
+/* Reset any other border colors that might override */
+#services .bg-white, 
+.card-content .rounded-xl,
+.service-card .bg-white,
+.valueprop-card {
+  border-color: #C17E6A !important;
+}
+
+/* Ensure consistent button styling across site */
+.devis-button, 
+#atouts a button,
+#services a button {
+  background-color: #f3e5d0 !important;
+  color: #3E2F1C !important;
+  border: 1px solid #C17E6A !important;
+}
+
+.devis-button:hover,
+#atouts a button:hover,
+#services a button:hover {
+  background-color: #ecddc8 !important;
 }
 
 /* Styles pour le wrapper tablette portrait */
@@ -79,8 +121,8 @@ html {
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-inter);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -200,3 +242,64 @@ html {
 [data-nimg="fill"] {
   background-color: transparent !important;
 }
+
+/* Force consistent background color */
+body {
+  background-color: #F8F5EF;
+}
+
+/* GSAP Animation Helpers */
+.gsap-reveal {
+  visibility: hidden; /* Initially hidden, GSAP will control visibility */
+}
+
+/* Optimize animations for better performance */
+.animate-me,
+.gsap-animated {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* For smoother image transitions */
+.image-container img {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Enable GPU acceleration for all animations */
+.avatar-gallery,
+.gsap-container,
+[data-gsap-animated="true"] {
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Prevent scroll jank during animations */
+html.has-scroll-smooth {
+  overflow: hidden;
+}
+
+.has-scroll-smooth body {
+  overflow: hidden;
+}
+
+/* Ensure avatar gallery transitions are smooth */
+.avatar-gallery-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Mobile accordion icon rotation */
+[data-state="open"] .mobile-accordion-icon {
+  transform: rotate(180deg);
+}
+
+/* Remove redundant GSAP visibility styles */
+/* The visibility is now handled by inline styles and layout.tsx */

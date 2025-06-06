@@ -1,6 +1,5 @@
 'use client'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
-import ScrollAnimation from '@/components/ui/scroll-animation'
 import { useState, useEffect } from "react";
 
 export default function FAQ() {
@@ -42,13 +41,11 @@ export default function FAQ() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  
-  const isDesktopLandscape = isMounted && !isMobileOrTablet;
 
   if (!isMounted) {
     return (
       <div className="w-full bg-[#F8F5EF]">
-        <div className="container mx-auto py-20 px-4 text-[#3E2F1C]">
+        <div className="container mx-auto py-12 px-4 text-[#3E2F1C]">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center">
             FAQ
           </h2>
@@ -66,44 +63,33 @@ export default function FAQ() {
 
   return (
     <div className="w-full bg-[#F8F5EF]">
-      <div className="container mx-auto py-20 px-4 text-[#3E2F1C]">
-        {isDesktopLandscape ? (
-          <ScrollAnimation animation="fade-up" duration={0.8} threshold={0.2}>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center">
-              FAQ
-            </h2>
-          </ScrollAnimation>
-        ) : (
-          <ScrollAnimation animation="fade-up" duration={0.6} threshold={0.1}>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center">
-              FAQ
-            </h2>
-          </ScrollAnimation>
-        )}
+      <div className="container mx-auto py-12 md:py-16 lg:py-20 px-4 text-[#3E2F1C]">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 lg:mb-14 text-center">
+          FAQ
+        </h2>
         
-        {isDesktopLandscape ? (
-          <ScrollAnimation animation="fade-up" delay={0.2} duration={1} threshold={0.2} stagger={0.15}>
-            <Accordion type="single" collapsible className="space-y-4">
-              {faqs.map((faq, idx) => (
-                <AccordionItem key={idx} value={`faq-${idx}`}>
-                  <AccordionTrigger>{faq.question}</AccordionTrigger>
-                  <AccordionContent>{faq.answer}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </ScrollAnimation>
-        ) : (
-          <ScrollAnimation animation="fade-up" delay={0.1} duration={0.8} threshold={0.1} stagger={0.1}>
-            <Accordion type="single" collapsible className="space-y-4">
-              {faqs.map((faq, idx) => (
-                <AccordionItem key={idx} value={`faq-${idx}`}>
-                  <AccordionTrigger>{faq.question}</AccordionTrigger>
-                  <AccordionContent>{faq.answer}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </ScrollAnimation>
-        )}
+        <div className="max-w-3xl mx-auto">
+          <Accordion 
+            type="single" 
+            collapsible 
+            className="space-y-4"
+          >
+            {faqs.map((faq, idx) => (
+              <AccordionItem 
+                key={idx} 
+                value={`faq-${idx}`}
+                className="border border-[#d9cfc0] rounded-lg shadow-sm overflow-hidden"
+              >
+                <AccordionTrigger className="hover:bg-[#f1ede5] px-4 py-3 text-left">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="px-4 py-3">
+                  <div className="accordion-content">{faq.answer}</div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
       </div>
     </div>
   )
