@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Header1 } from '@/components/header'
 import Hero from '@/components/Hero'
 import ClientExperience from '@/components/ClientExperience'
@@ -11,7 +11,7 @@ import FAQ from '@/components/FAQ'
 import Footer from '@/components/Footer'
 import ScrollReveal from '@/components/ScrollReveal';
 import { SmoothScrollWrapper } from '@/components/layout/SmoothScrollWrapper';
-import { useBasicAnimations, useSmoothScroll } from '@/hooks/useBasicAnimations';
+// Imports supprimés car non utilisés
 
 export default function Page() {
   const [isClient, setIsClient] = useState(false);

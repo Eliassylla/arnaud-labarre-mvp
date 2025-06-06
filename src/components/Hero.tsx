@@ -122,7 +122,7 @@ export default function Hero() {
         // Desktop specific animations
         "(min-width: 1024px)": function() {
           // Desktop animations - full timing and scale
-          const tl = createHeroAnimation(1);
+          createHeroAnimation(1); // Appel direct sans stocker le résultat
           
           // Desktop can have additional effects like parallax
           ScrollTrigger.create({

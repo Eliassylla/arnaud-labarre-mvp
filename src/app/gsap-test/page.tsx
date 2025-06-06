@@ -65,7 +65,7 @@ export default function GsapTestPage() {
               {Array.from({ length: 6 }).map((_, index) => (
                 <ScrollReveal 
                   key={index}
-                  direction={['up', 'down', 'left', 'right', 'fade', 'scale'][index % 6] as any}
+                  direction={['up', 'down', 'left', 'right', 'fade', 'scale'][index % 6] as 'up' | 'down' | 'left' | 'right' | 'fade' | 'scale'}
                   className="h-full"
                 >
                   <div className="bg-white p-6 rounded-lg shadow-md h-full flex flex-col">

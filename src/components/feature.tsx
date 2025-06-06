@@ -155,7 +155,7 @@ function Feature() {
     return () => ctx.revert();
   }, [isClient, navButtonsRef.current?.length]);
   
-  const isDesktopLandscape = !isMobileOrTablet;
+  // const isDesktopLandscape = !isMobileOrTablet; // Variable non utilisée
   
   const toggleDescription = () => {
     setIsDescriptionOpen(!isDescriptionOpen);

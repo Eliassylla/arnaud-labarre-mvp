@@ -26,15 +26,15 @@ export default function FAQ() {
     }
   ]
 
-  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  // Variable supprimée car non utilisée
   const [isMounted, setIsMounted] = useState(false);
   
   useEffect(() => {
     setIsMounted(true);
     
+    // Fonction de redimensionnement simplifiée
     const handleResize = () => {
-      const isSmallScreen = window.innerWidth < 1024;
-      setIsMobileOrTablet(isSmallScreen);
+      // Logique de redimensionnement supprimée car non utilisée
     };
     
     handleResize();

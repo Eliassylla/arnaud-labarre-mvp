@@ -238,7 +238,9 @@ export function useBasicAnimations() {
     
     // Handle snap property safely
     if (snap !== undefined) {
-      scrollTriggerConfig.snap = snap as any; // Using as any for now as the types are complex
+      // Ignorer temporairement l'erreur de type pour GSAP
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (scrollTriggerConfig as any).snap = snap;
     }
     
     // Handle pinReparent property
@@ -295,7 +297,7 @@ export function useBasicAnimations() {
     const {
       trigger,
       speed = 0.5,
-      container,
+      // container, // Variable non utilisée
       start = 'top bottom',
       end = 'bottom top',
       markers = false,

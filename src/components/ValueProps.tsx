@@ -8,7 +8,7 @@ import { gsap, ScrollTrigger } from '@/lib/gsap/gsap-config'
 import { useScrollToSection } from '@/hooks/useScrollToSection';
 
 export default function ValueProps() {
-  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  // const [isMobileOrTablet, setIsMobileOrTablet] = useState(false); // Variable non utilisée
   const [isClient, setIsClient] = useState(false);
   // Use our custom scroll hook
   const { scrollToSection } = useScrollToSection();
@@ -37,7 +37,7 @@ export default function ValueProps() {
     let resizeTimeout: ReturnType<typeof setTimeout>;
     
     function handleResize() {
-      setIsMobileOrTablet(window.innerWidth < 768);
+      // setIsMobileOrTablet(window.innerWidth < 768); // Variable non utilisée
     }
     
     // Initial check
@@ -153,7 +153,7 @@ export default function ValueProps() {
             </div>
             <h3 className="text-lg md:text-xl font-bold text-center text-[#3E2F1C] mb-2 md:mb-3">Savoir-faire traditionnel</h3>
             <p className="text-center text-sm md:text-base text-[#5f5b53]">
-              Plus de 20 ans d'expérience dans la création de mobilier sur mesure en utilisant des techniques traditionnelles d'ébénisterie.
+              Plus de 20 ans d&apos;expérience dans la création de mobilier sur mesure en utilisant des techniques traditionnelles d&apos;ébénisterie.
             </p>
           </div>
           
@@ -168,7 +168,7 @@ export default function ValueProps() {
             </div>
             <h3 className="text-lg md:text-xl font-bold text-center text-[#3E2F1C] mb-2 md:mb-3">Matériaux nobles</h3>
             <p className="text-center text-sm md:text-base text-[#5f5b53]">
-              Sélection minutieuse des meilleurs bois et matériaux pour garantir la durabilité et l'élégance de chaque création.
+              Sélection minutieuse des meilleurs bois et matériaux pour garantir la durabilité et l&apos;élégance de chaque création.
             </p>
           </div>
           
@@ -183,7 +183,7 @@ export default function ValueProps() {
             </div>
             <h3 className="text-lg md:text-xl font-bold text-center text-[#3E2F1C] mb-2 md:mb-3">Personnalisation</h3>
             <p className="text-center text-sm md:text-base text-[#5f5b53]">
-              Chaque projet est unique et créé sur mesure pour répondre parfaitement à vos besoins et s'intégrer harmonieusement à votre espace.
+              Chaque projet est unique et créé sur mesure pour répondre parfaitement à vos besoins et s&apos;intégrer harmonieusement à votre espace.
             </p>
           </div>
         </div>

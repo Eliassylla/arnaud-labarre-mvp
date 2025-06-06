@@ -10,9 +10,9 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Menu, MoveRight, X } from "lucide-react";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { PhoneMenu } from "@/components/ui/phone-menu";
-import { cn } from "@/lib/utils";
+// import { cn } from "@/lib/utils"; // Non utilisé
 import { useScrollToSection } from "@/hooks/useScrollToSection";
 
 function Header1() {
@@ -167,7 +167,7 @@ function Header1() {
                     </NavigationMenu>
                 </div>
                 <div className="flex lg:justify-center">
-                    <p className="font-semibold"></p>
+                    {/* Logo ou titre du site pourrait aller ici */}
                 </div>
                 <div className="flex justify-end w-full gap-4">
                     <div className="border-r hidden lg:inline"></div>

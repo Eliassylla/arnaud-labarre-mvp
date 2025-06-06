@@ -1,8 +1,8 @@
 'use client'
-import Image from 'next/image';
+// import Image from 'next/image'; // Non utilisé
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
 // import { Check } from 'lucide-react';
-import { Avatar } from '@/components/ui/avatar';
+// import { Avatar } from '@/components/ui/avatar'; // Non utilisé
 import { StaticAvatar } from '@/components/ui/static-avatar';
 import { gsap, ScrollTrigger } from '@/lib/gsap/gsap-config';
 
@@ -103,7 +103,7 @@ export default function ClientExperience() {
     return () => ctx.revert(); // Cleanup all animations and ScrollTriggers when component unmounts
   }, [isClient, isMobileOrTablet, isPortraitMode]); // Re-run when view mode changes
   
-  const isMobilePortrait = isMobileOrTablet && isPortraitMode;
+  // const isMobilePortrait = isMobileOrTablet && isPortraitMode; // Variable non utilisée
   
   return (
     <section ref={sectionRef} className="w-full py-12 md:py-16 lg:py-20 bg-[#F9F6F1] overflow-visible">
@@ -154,7 +154,7 @@ export default function ClientExperience() {
               >
                 <path d={svgPaths.star} fill="#3E2F1C" />
               </svg>
-              <span className="ml-3 text-[#3E2F1C] self-center">Savoir-faire d'exception</span>
+              <span className="ml-3 text-[#3E2F1C] self-center">Savoir-faire d&apos;exception</span>
             </div>
             
           </div>

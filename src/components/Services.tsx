@@ -4,9 +4,9 @@ import { useState, useEffect, useRef, RefCallback, useLayoutEffect } from "react
 import { cn } from "@/lib/utils"
 import { LoginForm } from "@/components/login-form"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
-import Image from 'next/image'
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
+// import Image from 'next/image' // Non utilisé
+// import { Badge } from "@/components/ui/badge" // Non utilisé
+// import { Card, CardContent } from "@/components/ui/card" // Non utilisé
 import { gsap, ScrollTrigger } from '@/lib/gsap/gsap-config'
 import { ChevronDown } from "lucide-react"
 
@@ -45,18 +45,9 @@ const services: Feature[] = [
 ];
 
 export default function ServicesSectionExample() {
-  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  // const [isMobileOrTablet, setIsMobileOrTablet] = useState(false); // Non utilisé
   
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobileOrTablet(window.innerWidth < 768);
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  // useEffect supprimé car il utilisait une variable qui n'existe plus
 
   return (
     <div className="w-full">
@@ -76,7 +67,7 @@ export function FeatureSteps({
   className,
   title = "How to get Started",
 }: FeatureStepsProps) {
-  const [isPortraitMobile, setIsPortraitMobile] = useState(false);
+  // const [isPortraitMobile, setIsPortraitMobile] = useState(false); // Non utilisé
   const [isTabletPortrait, setIsTabletPortrait] = useState(false);
   const [isClient, setIsClient] = useState(false);
   
@@ -101,10 +92,10 @@ export function FeatureSteps({
     
     function handleResize() {
       const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-      const isMobile = window.innerWidth < 768;
+      // const isMobile = window.innerWidth < 768; // Variable non utilisée
       const isTablet = window.innerWidth >= 768 && window.innerWidth <= 1024;
       
-      setIsPortraitMobile((isMobile || isTablet) && isPortrait);
+      // setIsPortraitMobile((isMobile || isTablet) && isPortrait); // Variable non utilisée
       setIsTabletPortrait(isTablet && isPortrait);
     }
     
@@ -298,7 +289,7 @@ export function FeatureSteps({
                     Mobilier personnalisé haut de gamme
                   </AccordionTrigger>
                   <AccordionContent className="text-[#3E2F1C]/80">
-                    Création de meubles uniques en bois noble, pensés pour s'adapter parfaitement à votre intérieur.
+                    Création de meubles uniques en bois noble, pensés pour s&apos;adapter parfaitement à votre intérieur.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem 
@@ -322,7 +313,7 @@ export function FeatureSteps({
                     Agencement intérieur personnalisé
                   </AccordionTrigger>
                   <AccordionContent className="text-[#3E2F1C]/80">
-                    Conception d'espaces optimisés et esthétiques, adaptés à vos envies et à la configuration de votre habitat.
+                    Conception d&apos;espaces optimisés et esthétiques, adaptés à vos envies et à la configuration de votre habitat.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem 

@@ -3,6 +3,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from '@/lib/gsap/gsap-config';
 
+// Définir une interface pour ScrollSmoother
+interface ScrollSmoother {
+  scrollTop: (position: number) => void;
+  kill: () => void;
+  progress: number;
+}
+
 interface SmoothScrollWrapperProps {
   children: React.ReactNode;
   smoothness?: number;
@@ -30,7 +37,7 @@ export function SmoothScrollWrapper({
 }: SmoothScrollWrapperProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [smoother, setSmoother] = useState<any>(null);
+  const [smoother, setSmoother] = useState<ScrollSmoother | null>(null);
   const [isClient, setIsClient] = useState(false);
   
   // Only run on client side
@@ -76,7 +83,8 @@ export function SmoothScrollWrapper({
           smoothTouch: smoothTouch,
           effects: effects ? `[data-${effectsPrefix}], [data-${effectsPrefix}-lag]` : false,
           effectsPrefix: effectsPrefix,
-          effectsPadding: effectsPadding as any // Cast to any to resolve type issue
+          // @ts-expect-error - GSAP accepte plusieurs types pour effectsPadding
+          effectsPadding: effectsPadding
         });
         
         setSmoother(smootherInstance);

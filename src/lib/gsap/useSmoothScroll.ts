@@ -28,9 +28,9 @@ export function useSmoothScroll() {
       // Check if the plugin exists using a type-safe approach
       let isScrollToRegistered = false;
       try {
-        // @ts-ignore - Checking if the plugin is registered in a runtime-safe way
+        // @ts-expect-error - Checking if the plugin is registered in a runtime-safe way
         isScrollToRegistered = !!gsap.plugins?.scrollTo || !!gsap.core.getCache('scrollTo');
-      } catch (e) {
+      } catch {  // Ignorer l'erreur sans utiliser la variable
         // Ignore error
       }
       
@@ -52,7 +52,7 @@ export function useSmoothScroll() {
       offsetY = offset, // If only offset is provided, use it for Y
       duration = 1, 
       ease = 'power2.inOut',
-      position = 'top top',
+      // position = 'top top', // Variable non utilisée
       onStart,
       onComplete,
       onInterrupt,
